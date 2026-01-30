@@ -1,4 +1,4 @@
-# Template repo gitignore (for sendhelp template development)
+# Template repo gitignore (for devkit template development)
 # Generated projects get their own .gitignore from template/.gitignore
 
 # OpenCode runtime files (root only, not template/)

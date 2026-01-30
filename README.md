@@ -1,4 +1,4 @@
-# sendhelp - AI Agent Project Template
+# devkit - AI Agent Project Template
 
 A [Copier](https://copier.readthedocs.io/) template for AI-powered software projects with structured planning-to-execution workflows.
 
@@ -30,7 +30,7 @@ A [Copier](https://copier.readthedocs.io/) template for AI-powered software proj
 pipx install copier
 
 # Create a new project from this template
-copier copy gh:pentaxis93/sendhelp my-new-project
+copier copy gh:pentaxis93/devkit my-new-project
 
 # Answer the prompts:
 # - Project name: My New Project
@@ -52,7 +52,7 @@ Copier will merge template changes while preserving your project-specific files 
 ## Template Structure
 
 ```
-sendhelp/                          (this repo - template source)
+devkit/                            (this repo - template source)
 ├── copier.yml                     (template configuration)
 ├── README.md                      (this file)
 ├── docs/                          (template meta-documentation)

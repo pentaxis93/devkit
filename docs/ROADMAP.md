@@ -1,6 +1,6 @@
 # Template Roadmap
 
-Evolution plan for the sendhelp project template.
+Evolution plan for the devkit project template.
 
 ## v0.1.0 (Released 2026-01-30)
 

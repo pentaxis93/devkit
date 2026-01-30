@@ -188,4 +188,4 @@ This preserves the lived experience and authenticity of the insight.
 
 ## Attribution
 
-Developed from lived experience in the sendhelp template development session (2026-01-30), capturing the insight that voice-reading users need structured, scannable responses with clear reference handles.
+Developed from lived experience in the devkit template development session (2026-01-30), capturing the insight that voice-reading users need structured, scannable responses with clear reference handles.
