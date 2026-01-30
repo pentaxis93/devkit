@@ -1,45 +1,43 @@
 ---
 name: vision-workshop
 description: >-
-  Interactive workshop for capturing product/project vision using the Product
-  Vision Board methodology. Use when creating, defining, or refining project
-  vision, or when starting a new project and need to establish "what are we
-  building and why."
+  Interactive workshop for capturing vision using the Product Vision Board
+  methodology. Use when envisioning a new project, a new feature for an
+  existing project, or a change to existing behavior. Relevant for
+  greenfield projects, feature scoping, product direction, incremental
+  development planning.
 ---
 
 # Vision Workshop Skill
 
-Interactive workshop for capturing product/project vision using the Product Vision Board methodology, producing a complete planning/vision.md artifact.
+Interactive workshop for capturing vision using the Product Vision Board
+methodology, producing a planning/vision.md artifact.
+
+This skill is recursive. The first invocation creates the greenfield
+project vision. Subsequent invocations envision incremental features or
+changes to existing behavior. The same methodology applies at every
+scale — the workshop adapts to whether the scope is a whole product or
+a single feature.
 
 ## When to Activate
 
 Use this skill when:
-- Creating a vision for a new project
-- Defining or refining product vision
-- Running a vision workshop session
-- Starting a new project and need to establish "what are we building and why"
-- Working with planning/vision.md template
+- Envisioning a new project (greenfield)
+- Envisioning a new feature for an existing project
+- Envisioning a change to existing behavior
+- Refining or revisiting an existing vision
+- Working with planning/vision.md
 
 ## Methodology
 
-**Chosen Methodology:** Product Vision Board (Roman Pichler)
+**Product Vision Board** (Roman Pichler)
 
-**Rationale:** Selected based on research comparing Product Vision Board, PR/FAQ, Lean Canvas, and elevator pitch formats.
-
-Why Product Vision Board wins for small teams:
+Why this works for small teams:
 1. Balances aspiration (vision) with pragmatics (strategy) on one page
-2. Can be completed in 1-2 hours, not days (unlike PR/FAQ)
+2. Can be completed in 1-2 hours, not days
 3. Explicitly designed for validation and iteration
-4. Doesn't require narrative writing skill
+4. Does not require narrative writing skill
 5. Includes business goals without full business model complexity
-
-### Alternatives Considered
-
-| Methodology | Reason Not Selected | When Appropriate |
-|-------------|---------------------|------------------|
-| PR/FAQ (Amazon Working Backwards) | Time-intensive (hours to days); requires strong writing skill; overkill for solo/small teams | Complex products needing stakeholder alignment across large organizations |
-| Lean Canvas | More business-model focused than vision-focused; present-state rather than aspirational | Business model validation, startup pitch preparation |
-| Elevator Pitch / Vision Statement | Too compressed for strategic decision-making; doesn't guide product decisions | Communication tool after vision is already clear internally |
 
 ## Core Principles
 
@@ -49,7 +47,7 @@ Vision captures outcomes and value, never implementation details.
 
 *Implementation changes; value proposition should be stable. Mixing in implementation constrains future solutions.*
 
-**Test:** Could you describe this to someone in 1922 without referencing technology?
+**Test:** Could this vision be achieved with three completely different technical approaches? If it prescribes a specific implementation, it belongs in a later pipeline stage.
 
 ### 2. Specificity Over Generality
 
@@ -345,7 +343,7 @@ Before completing, verify:
 
 **Workshop Flow:**
 
-Agent: Let's create a vision for your project. We'll use the Product Vision Board methodology - a structured approach that captures vision and strategy in about an hour.
+Agent: Let's create a vision for your project. We'll use the Product Vision Board - a structured approach that captures vision and strategy in about an hour.
 
 First, let's start with the North Star. What world are you trying to create? What positive change do you want to see?
 
@@ -433,19 +431,17 @@ Agent: That's a solid validation plan. Your vision is ready for feature discover
 - **Domain:** strategic-planning
 - **Energy:** medium-high
 - **Time Estimate:** 60-90 minutes for complete workshop
-- **Prerequisites:** Rough idea of what you're building; access to planning/vision.md template; willingness to be specific
+- **Prerequisites:** Rough idea of what to build or change; access to planning/vision.md; willingness to be specific
 - **Outputs:** planning/vision.md with STATUS: draft
 - **Next Steps:** Validate biggest assumption; use feature-discovery skill to derive features from vision
 
+## Output Template
+
+For the exact markdown template for `planning/vision.md`, see
+[references/vision-template.md](references/vision-template.md).
+
 ## TODO: Pending Adaptations
 
-- [ ] Define the exact markdown template for planning/vision.md (YAML
-  frontmatter + markdown sections). See planning session notes for the
-  proposed format with status/created/updated frontmatter.
 - [ ] Review whether Lean Inception's Is/Isn't-Does/Doesn't matrix should
   be added as a scope-bounding artifact in Phase 5 or Phase 7.
 
-## Attribution
-
-Imported from [beadsmith](https://github.com/user/beadsmith/tree/main/skills/vision-workshop).
-Light adaptation: org-mode references changed to markdown.

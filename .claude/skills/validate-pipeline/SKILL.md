@@ -1,3 +1,12 @@
+---
+name: validate-pipeline
+description: >-
+  Run validation gates before closing a bead. Orchestrates test suites,
+  linters, and format checks with hard/hybrid/advisory gate levels. Use
+  when closing a bead, verifying acceptance criteria, or running
+  pre-close quality checks during beads execution.
+---
+
 # Validate Pipeline Skill
 
 > Version: 1.0.0
@@ -132,7 +141,7 @@ steps:
     blocking: false   # Advisory only (warning)
     
   - name: fixture-validate
-    command: beadsmith validate fixtures
+    command: bd validate fixtures
     blocking: hybrid  # Agent can override with justification
     
   - name: cargo-fmt
@@ -227,7 +236,7 @@ Before completing validation:
 1. Run cargo test -> 0 (passed)
 2. Run fixture validate -> 1 (failed, 1 missing fixture)
 3. Agent analyzes: fixture for new feature, will be created in follow-up bead
-4. Agent provides justification: "New fixture, tracked in beadsmith-e12.5"
+4. Agent provides justification: "New fixture, tracked in bd-e12.5"
 5. Log override in bead notes
 6. Allow bead closure with documented override
 ```
@@ -261,4 +270,4 @@ LOOP:
 
 - [docs/validation-interface.md](../docs/validation-interface.md) - Validation step interface spec
 - [commands/beads-loop.md](../commands/beads-loop.md) - Step 5 VERIFY COMPLETION
-- beadsmith-e12.2 - Design validation step interface (completed)
+- bd-e12.2 - Design validation step interface (completed)

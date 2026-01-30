@@ -1,3 +1,12 @@
+---
+name: bdd-scenario-design
+description: >-
+  Transform acceptance criteria into well-formed Gherkin scenarios. Use
+  when writing BDD scenarios from bead acceptance criteria, designing
+  Given/When/Then specifications, or converting requirements into
+  testable Gherkin feature files.
+---
+
 # BDD Scenario Design Skill
 
 > Version: 1.0.0
@@ -281,8 +290,8 @@ Scenario Outline: Password validation rejects invalid passwords
 ```
 tests/
   features/
-    beadsmith-e12.2.feature    # Named after bead ID
-    beadsmith-e12.3.feature
+    bd-e12.2.feature    # Named after bead ID
+    bd-e12.3.feature
     shared/
       authentication.feature   # Shared scenarios
 ```

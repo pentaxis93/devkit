@@ -1,10 +1,11 @@
 ---
 name: beads-plan
 description: >-
-  Transform project specifications into executable beads dependency graphs
-  with proper decomposition, dependency mapping, and validation. Use when
-  starting new projects, breaking down epics, planning multi-step work,
-  or when asked to create a beads implementation plan.
+  Transform epic definitions from journey files into executable beads
+  dependency graphs. Decomposes epics into bounded tasks with dependency
+  mapping and validation. Use when breaking down epics from journey-mapping,
+  planning multi-step work, or when asked to create a beads implementation
+  plan.
 ---
 
 # Beads Planning Skill
@@ -13,36 +14,35 @@ description: >-
 
 This skill guides the transformation of project specifications into instantiated beads dependency graphs. A well-planned beads implementation creates an executable DAG (directed acyclic graph) where each bead (issue) has clear boundaries, explicit inputs/outputs, and testable success criteria.
 
-### Integration with Org-mode Planning Layer
+### Pipeline Position
 
-Beads operates as the **execution layer** in a layered planning architecture:
+This skill is the bridge between **planning** and **execution**:
 
 ```
-┌─────────────────────────────────────────────┐
-│  PLANNING LAYER (Markdown)                  │
-│  - Human-visible project state (planning/*.md)│
-│  - Strategic decomposition                  │
-└─────────────────────────────────────────────┘
-                     │
-       [spawn-to-beads: Task Spawns Epic]
-                     ▼
-┌─────────────────────────────────────────────┐
-│  EXECUTION LAYER (Beads) ← YOU ARE HERE     │
-│  - Agent-executable decomposition           │
-│  - Swarm coordination and claiming          │
-└─────────────────────────────────────────────┘
-                     │
-       [complete-to-org: Epic Completes]
-                     ▼
-┌─────────────────────────────────────────────┐
-│  PLANNING LAYER (Markdown) - State Updated  │
-└─────────────────────────────────────────────┘
+journey-mapping ──> planning/journeys/<slug>.md
+                    (includes epic definitions + acceptance criteria)
+                         │
+                    beads-plan (YOU ARE HERE)
+                    ├── Read epic definitions from journey file
+                    ├── Decompose each epic into bead DAG
+                    └── Validate dependency graph
+                         │
+                    beads-execute
+                    (claim/work/close beads autonomously)
 ```
 
-**Key Integration Points:**
-- Epics may be spawned from org-mode tasks via `spawn-to-beads` skill
-- Such epics have a `source_org_id` reference in their description
-- When these epics complete, `complete-to-org` skill updates the source org task
+**Input:** Epic definitions from `planning/journeys/<slug>.md`. Each
+epic has a title, scope, acceptance criteria (derived from Gherkin
+scenarios), walking skeleton reference, estimated complexity, and
+dependencies.
+
+**Output:** Instantiated bead DAG — a dependency graph of tasks with
+clear boundaries, explicit inputs/outputs, and testable acceptance
+criteria.
+
+**Traceability:** Each epic's bead description includes a
+`source_journey` reference linking back to its origin journey file.
+Child beads trace back through the parent relationship.
 
 ### What Beads Planning Offers
 
@@ -85,122 +85,6 @@ bd dep cycles     # Should return empty (no cycles)
 ```
 
 For complex projects, follow the five phases below. The phases are internal reasoning steps—work through them continuously and present the instantiated result. Only pause for user input when the specification has genuine ambiguity that blocks progress.
-
----
-
-## Spawned Epics (from Org-mode)
-
-> **NOTE:** This section references org-mode, which has been replaced by
-> markdown artifacts in this project. See TODO below for adaptation needs.
-
-When an epic is created via the `spawn-to-beads` skill from an org-mode task, special handling applies:
-
-### Identifying Spawned Epics
-
-Spawned epics include a source reference in their description:
-
-```bash
-# Epic created with source reference
-bd create "Implement Authentication" -t epic -p 1 \
-  -d "[source_org_id: task-implement-auth] Full description here..."
-```
-
-The `source_org_id` marker links this epic back to the originating org-mode task.
-
-### Completion Callback Protocol
-
-When closing an epic that has a `source_org_id`:
-
-1. **Check for source reference** in epic description:
-   ```bash
-   bd show <epic-id> --json | jq -r '.description' | grep -o 'source_org_id: [^]]*'
-   ```
-
-2. **Verify 100% completion** (all child beads closed):
-   ```bash
-   bd epic status <epic-id>
-   ```
-
-3. **Trigger complete-to-org skill** to update the org-mode task:
-   - The org task transitions from WAITING to DONE
-   - The DELEGATED_TO property may be cleared or annotated
-
-4. **Then close the epic**:
-   ```bash
-   bd close <epic-id> -r "All tasks complete. Org task updated."
-   ```
-
-**Important:** Always trigger the org callback BEFORE closing the epic, so the source reference is still accessible.
-
-### Non-Spawned Epics
-
-Epics created directly (without org source) follow normal workflow with no callback required.
-
-**However**, direct epic creation violates org-mode coherence. See "Org-Mode Coherence" section below.
-
----
-
-## Org-Mode Coherence
-
-> **NOTE:** This section references org-mode, which has been replaced by
-> markdown artifacts in this project. See TODO below for adaptation needs.
-
-**Architectural Principle:** Org-mode is the canonical planning layer. All work SHOULD originate from org-mode.
-
-### Why Coherence Matters
-
-When epics are created without org source:
-- Planning layer (org-mode) doesn't reflect actual work
-- No bidirectional traceability
-- Weekly reviews miss work in progress
-- Completion callbacks cannot update planning state
-
-### Creating Epics
-
-**RECOMMENDED: Spawn from org-mode**
-
-Use `spawn-to-beads` skill to create epic from org task:
-```bash
-# 1. Have org task ready
-# 2. Use spawn-to-beads skill (establishes bidirectional refs)
-# 3. Result: epic has source_org_id, org task has DELEGATED_TO
-```
-
-**TACTICAL EXCEPTION: Direct creation**
-
-Creating epics directly is permitted but produces a warning:
-```bash
-# Before: bd create "Epic Title" -t epic -p 1 -d "Description"
-# 
-# Ask yourself:
-# - Is this genuinely ad-hoc work?
-# - Should an org task exist for this work?
-# - Will I remember to update org-mode when complete?
-#
-# If creating without org source, acknowledge the deviation:
-echo "WARNING: Creating epic without org source. Org-mode coherence violated."
-```
-
-### Coherence Check (Phase 4)
-
-During instantiation, before creating the epic:
-
-1. **Check for org source**: Does this work have an org task?
-2. **If yes**: Use `spawn-to-beads` skill instead of direct creation
-3. **If no**: 
-   - Consider creating org task first (recommended)
-   - Or proceed with warning (tactical exception)
-
-### Retroactive Sync
-
-If an epic was created without org source and should be tracked:
-
-1. Create corresponding org task in appropriate project
-2. Set org task to WAITING state
-3. Add `DELEGATED_TO` property pointing to existing epic ID
-4. Edit epic description to include `[source_org_id: <org-id>]` marker
-
-This restores bidirectional traceability but is more work than doing it right initially.
 
 ---
 
@@ -255,7 +139,7 @@ Example with context:
 ```bash
 # Context says: new commands go in commands/<name>.rs, follow init.rs pattern
 bd create "Add export command" -t task -p 2 --parent bd-XXXX \
-  -d "Create commands/export.rs following init.rs pattern. See context-beadsmith.md §Structure Map." \
+  -d "Create commands/export.rs following init.rs pattern. See planning-context.md §Structure Map." \
   --acceptance "Command works, tests in #[cfg(test)] module, error handling uses anyhow::Result with .context()"
 ```
 
@@ -278,15 +162,29 @@ Planning Context Snapshots include staleness warnings. If context is stale:
 
 ## Phase 1: Understanding
 
-**Goal**: Fully understand the project scope before decomposing.
+**Goal**: Fully understand the epic scope before decomposing.
+
+### Read the Epic Definition
+
+Read the epic definition from `planning/journeys/<slug>.md`. Extract:
+
+1. **Title and scope** — what this epic delivers
+2. **Acceptance criteria** — derived from Gherkin scenarios in the journey
+3. **Walking skeleton** — if this is the first epic, the thin slice
+4. **Estimated complexity** — S/M/L/XL from the journey's INVEST gate
+5. **Dependencies** — on other epics from this or other journeys
+
+If a Planning Context Snapshot exists (from `iterative-planning-context`
+skill), load it now for codebase structure, conventions, and integration
+points.
 
 ### Key Determinations
 
 Before creating any beads, establish clarity on:
 
-1. **Scope**: What is the deliverable? What is explicitly out of scope?
-2. **Success criteria**: How will we know when the project is complete?
-3. **Constraints**: Timeline, technology stack, external dependencies?
+1. **Scope**: What does the epic deliver? What is explicitly out of scope?
+2. **Success criteria**: What Gherkin scenarios must pass?
+3. **Constraints**: Technology stack, external dependencies, timeline?
 4. **Risks**: What could go wrong? What's uncertain?
 5. **Stakeholders**: Who needs to review or approve?
 
@@ -382,13 +280,13 @@ Every bead must have:
 
 A poorly-specified bead forces the executing agent to re-discover domain knowledge, make assumptions about intent, and produce work that technically passes but misses the point.
 
-See `docs/bead-quality-criteria.md` for the complete specification. Key requirements:
+See `references/bead-quality-criteria.md` for the complete specification. Key requirements:
 
 **1. Description Encodes Domain Knowledge**
 
 Bad: "Create the vision-workshop skill for guided vision creation."
 
-Good: "Create skills/vision-workshop/input.yaml implementing the Product Vision Board methodology (Roman Pichler) for co-creative vision document creation. Workflow phases: 1) North Star, 2) Target Users, 3) Core Problem, 4) Value Proposition, 5) Standout Capabilities, 6) Success Criteria, 7) Anti-Goals, 8) Synthesis. Reference: skills/org-planning/input.yaml for structure pattern."
+Good: "Create skills/vision-workshop/SKILL.md implementing the Product Vision Board methodology (Roman Pichler) for co-creative vision document creation. Workflow phases: 1) North Star, 2) Target Users, 3) Core Problem, 4) Value Proposition, 5) Standout Capabilities, 6) Success Criteria, 7) Anti-Goals, 8) Synthesis. Reference: skills/feature-discovery/SKILL.md for structure pattern."
 
 **Test:** Could an agent with NO prior context execute this bead and produce the intended result?
 
@@ -431,7 +329,7 @@ The bad criteria verify that changes were made. The good criteria verify that **
 
 Bad: "Follow existing patterns in the codebase."
 
-Good: "Follow the pattern in skills/org-planning/input.yaml: workflow section with phases/steps/outputs, patterns section, antipatterns section, checklist section, examples section."
+Good: "Follow the pattern in skills/feature-discovery/SKILL.md: workflow section with phases/steps/outputs, patterns section, antipatterns section, checklist section, examples section."
 
 **4. Scope Is Bounded**
 
@@ -444,6 +342,55 @@ Every bead should have implicit or explicit in-scope/out-of-scope. If scope is a
 - [ ] Concrete references (file paths, line numbers, pattern examples)
 - [ ] Bounded scope (in-scope and out-of-scope explicit if ambiguous)
 - [ ] Observable success (verification steps are concrete)
+
+### INVEST at Bead Granularity
+
+Journey-mapping applies INVEST at the epic level. Re-apply at bead
+granularity — each bead should be:
+
+- **Independent** — Minimal dependencies on other beads
+- **Negotiable** — Implementation approach has latitude
+- **Valuable** — Delivers a testable increment
+- **Estimable** — Fits in one session (30min–3hr)
+- **Small** — Single deliverable, independently testable
+- **Testable** — Acceptance criteria are concrete
+
+### Walking Skeleton First
+
+If the epic identifies a walking skeleton, decompose it first as a
+vertical slice — a thin end-to-end path touching every layer. This
+surfaces integration issues early and provides a working foundation
+for subsequent beads to build on.
+
+```
+Epic: First Deployment Happy Path
+  Bead 1: Walking skeleton (install → deploy → verify, happy path only)
+  Bead 2: Robust project detection (expand recognition)
+  Bead 3: Deployment configuration (support custom settings)
+  ...
+```
+
+### Gherkin-to-Acceptance Mapping
+
+Each bead's acceptance criteria should trace to specific Gherkin
+scenarios from the journey file. This ensures the bead verifies
+**purpose** (the scenario's intent), not just existence of code.
+
+```
+Journey scenario:
+  Scenario: Tool recognizes standard project structure
+    Given a developer has a standard project structure
+    When the developer adds the deployment tool
+    Then the tool reports successful project recognition
+
+Bead acceptance criteria:
+  1. Running `mytool init` in a standard Node.js project reports success
+  2. Running `mytool init` in a standard Go project reports success
+  3. Project type is detected and stored in config
+```
+
+The scenario describes **what**; the bead criteria describe **how to
+verify it** in concrete, testable terms.
 
 ### Decomposition Patterns
 
@@ -637,38 +584,24 @@ bd dep cycles  # Should return empty
 3. **Tasks** (with `--parent` pointing to epic or feature)
 4. **Dependencies** (after all beads exist)
 
-### Coherence Check (Before Creating Epic)
+### Traceability (Before Creating Epic)
 
-Before creating the epic, verify org-mode coherence:
+Before creating the epic, establish the traceability chain. Every epic
+must reference its source journey file:
 
-1. **Does this work have an org task?**
-   - If YES → Use `spawn-to-beads` skill instead (see "Spawned Epics" section)
-   - If NO → Continue, but acknowledge the deviation
-
-2. **If proceeding without org source:**
-   ```bash
-   # Acknowledge coherence violation (tactical exception)
-   echo "NOTE: Creating epic without org source - ensure org-mode is updated when complete"
-   ```
-
-### Creating Epics
-
-**With org source (RECOMMENDED):**
 ```bash
-# Use spawn-to-beads skill - it creates epic with source_org_id
-# and updates org task with DELEGATED_TO property
-```
-
-**Without org source (TACTICAL EXCEPTION):**
-```bash
-bd create "Project Epic Title" \
+bd create "Epic Title" \
   -t epic \
   -p 1 \
-  -d "High-level description of the project goal" \
-  --acceptance "All child features complete, tests passing, docs updated"
+  -d "[source_journey: journeys/first-deployment.md#epic-name] Description of the goal" \
+  --acceptance "All child beads complete, acceptance criteria from journey verified"
 ```
 
-Capture the returned ID (e.g., `bd-a3f8`).
+The `source_journey` reference links the epic back to its origin in the
+planning layer. Child beads trace back through the parent relationship —
+only the epic needs this reference.
+
+Capture the returned epic ID (e.g., `bd-a3f8`).
 
 ### Creating Child Tasks with Hierarchical IDs
 
@@ -855,332 +788,19 @@ To execute:
 
 3. **Recovery is possible** - If execution fails, the plan remains intact for retry.
 
-See `docs/bead-quality-criteria.md` § "Planning/Execution Boundary" for details.
+See `references/bead-quality-criteria.md` § "Planning/Execution Boundary" for details.
 
 **Exception:** The planning agent may execute only if the user explicitly requests it (e.g., "execute the first bead now").
 
 ---
 
-## Swarm Execution Guidance
+## Reference Material
 
-> **Note:** This section documents how the `beads-harness` and execution agents work.
-> It is reference material, not actions for the planning agent to perform.
+For detailed reference material extracted for modularity, see:
 
-When multiple agents work on the same beads project, coordination is essential.
-
-### Agent Workflow
-
-1. **Find ready work**:
-   ```bash
-   bd ready --json
-   ```
-
-2. **Claim a bead** (atomic operation):
-   ```bash
-   bd update bd-XXXX --claim
-   ```
-   This atomically sets `status=in_progress` and `assignee=<agent>`. Fails if already claimed.
-
-3. **Work on the bead**: Implement the task.
-
-4. **Complete the bead**:
-   ```bash
-   bd close bd-XXXX -r "Completed: brief summary"
-   ```
-
-5. **Sync changes**:
-   ```bash
-   bd sync
-   ```
-
-6. **Check for newly unblocked work**:
-   ```bash
-   bd ready --json
-   ```
-
-### Status Transitions
-
-```
-open -> in_progress (via --claim or --status in_progress)
-in_progress -> closed (via bd close)
-closed -> open (via bd reopen, if needed)
-```
-
-### Avoiding Conflicts
-
-- **Always claim before working**: Never work on unclaimed beads
-- **Sync frequently**: Run `bd sync` before and after work sessions
-- **Use JSON output**: `--json` flag for programmatic parsing
-- **Check assignee**: `bd show bd-XXXX --json | jq '.assignee'`
-
-### Multi-Agent Patterns
-
-**Round-Robin**:
-Each agent queries `bd ready`, claims the first unclaimed bead.
-
-**Specialized Agents**:
-Filter by label: `bd ready --label backend` vs `bd ready --label frontend`
-
-**Priority-Based**:
-Sort by priority: `bd ready --sort priority`
-
----
-
-## Worked Example: CLI Tool with 3 Subcommands
-
-### Specification
-
-> Build a CLI tool called `mytool` with three subcommands: `init`, `run`, and `status`. 
-> It should be written in Go, have a config file, and include tests.
-
-### Phase 1: Understanding
-
-**Scope**: CLI tool with 3 commands, Go, config support, tests.
-**Success**: `mytool init`, `mytool run`, `mytool status` all work, tests pass.
-**Constraints**: Go 1.21+, Cobra for CLI framework.
-**Boundaries**: 
-- Core library (shared code)
-- CLI layer (Cobra commands)
-- Config system
-- Each subcommand
-
-### Phase 2: Decomposition
-
-```
-Epic: mytool CLI
-  Task: Project scaffolding (go mod, directory structure)
-  Task: Implement config loading
-  Task: Implement `init` subcommand
-  Task: Implement `run` subcommand  
-  Task: Implement `status` subcommand
-  Task: Add unit tests
-  Task: Add integration tests
-  Task: Write README documentation
-```
-
-### Phase 3: Dependency Mapping
-
-```
-scaffolding <- config <- init
-scaffolding <- config <- run
-scaffolding <- config <- status
-init, run, status <- unit tests
-unit tests <- integration tests
-integration tests <- documentation (docs describe tested behavior)
-```
-
-### Phase 4: Instantiation
-
-```bash
-# Create epic
-bd create "mytool CLI" -t epic -p 1 \
-  -d "CLI tool with init, run, and status subcommands" \
-  --acceptance "All commands work, tests pass, README complete"
-# Returns: bd-m7k2
-
-# Create tasks with hierarchical IDs
-bd create "Project scaffolding" -t task -p 1 --parent bd-m7k2 \
-  -d "Set up go.mod, directory structure, Cobra root command" \
-  --acceptance "go build succeeds, mytool --help works"
-# Returns: bd-m7k2.1
-
-bd create "Implement config loading" -t task -p 1 --parent bd-m7k2 \
-  -d "Config file parsing with Viper, support YAML and env vars" \
-  --acceptance "Config loads from file and environment"
-# Returns: bd-m7k2.2
-
-bd create "Implement init subcommand" -t task -p 2 --parent bd-m7k2 \
-  -d "mytool init creates default config file" \
-  --acceptance "Running mytool init creates .mytool.yaml"
-# Returns: bd-m7k2.3
-
-bd create "Implement run subcommand" -t task -p 2 --parent bd-m7k2 \
-  -d "mytool run executes the main workflow" \
-  --acceptance "Running mytool run produces expected output"
-# Returns: bd-m7k2.4
-
-bd create "Implement status subcommand" -t task -p 2 --parent bd-m7k2 \
-  -d "mytool status shows current state" \
-  --acceptance "Running mytool status displays state information"
-# Returns: bd-m7k2.5
-
-bd create "Add unit tests" -t task -p 2 --parent bd-m7k2 \
-  -d "Unit tests for config, init, run, status packages" \
-  --acceptance "go test ./... passes with >70% coverage"
-# Returns: bd-m7k2.6
-
-bd create "Add integration tests" -t task -p 3 --parent bd-m7k2 \
-  -d "End-to-end tests running actual CLI commands" \
-  --acceptance "Integration test suite passes"
-# Returns: bd-m7k2.7
-
-bd create "Write README documentation" -t task -p 3 --parent bd-m7k2 \
-  -d "README with installation, usage, and examples" \
-  --acceptance "README covers all commands with examples"
-# Returns: bd-m7k2.8
-
-# Add dependencies
-bd dep add bd-m7k2.2 bd-m7k2.1  # config depends on scaffolding
-bd dep add bd-m7k2.3 bd-m7k2.2  # init depends on config
-bd dep add bd-m7k2.4 bd-m7k2.2  # run depends on config
-bd dep add bd-m7k2.5 bd-m7k2.2  # status depends on config
-bd dep add bd-m7k2.6 bd-m7k2.3  # unit tests depend on init
-bd dep add bd-m7k2.6 bd-m7k2.4  # unit tests depend on run
-bd dep add bd-m7k2.6 bd-m7k2.5  # unit tests depend on status
-bd dep add bd-m7k2.7 bd-m7k2.6  # integration tests depend on unit tests
-bd dep add bd-m7k2.8 bd-m7k2.7  # docs depend on integration tests
-```
-
-### Phase 5: Validation
-
-```bash
-$ bd ready
-bd-m7k2.1  P1  task  Project scaffolding
-
-$ bd dep cycles
-# (empty - no cycles)
-
-$ bd graph bd-m7k2
-┌─────────────────────────────────────────────────────────────┐
-│ Layer 0                                                     │
-│ ○ bd-m7k2.1 Project scaffolding                             │
-├─────────────────────────────────────────────────────────────┤
-│ Layer 1                                                     │
-│ ○ bd-m7k2.2 Implement config loading                        │
-├─────────────────────────────────────────────────────────────┤
-│ Layer 2                                                     │
-│ ○ bd-m7k2.3 Implement init subcommand                       │
-│ ○ bd-m7k2.4 Implement run subcommand                        │
-│ ○ bd-m7k2.5 Implement status subcommand                     │
-├─────────────────────────────────────────────────────────────┤
-│ Layer 3                                                     │
-│ ○ bd-m7k2.6 Add unit tests                                  │
-├─────────────────────────────────────────────────────────────┤
-│ Layer 4                                                     │
-│ ○ bd-m7k2.7 Add integration tests                           │
-├─────────────────────────────────────────────────────────────┤
-│ Layer 5                                                     │
-│ ○ bd-m7k2.8 Write README documentation                      │
-└─────────────────────────────────────────────────────────────┘
-
-$ bd epic status bd-m7k2
-Epic: mytool CLI (bd-m7k2)
-Progress: 0/8 complete (0%)
-Ready: 1, Blocked: 7, In Progress: 0
-```
-
-**Result**: Valid dependency graph with one ready starting point, no cycles, clear execution layers.
-
----
-
-## BD Command Reference
-
-### Initialization
-
-```bash
-bd init                    # Interactive initialization
-bd init --quiet            # Non-interactive (for agents)
-bd init --prefix myproj    # Custom ID prefix
-```
-
-### Creating Issues
-
-```bash
-bd create "Title" [flags]
-
-Flags:
-  -t, --type string        # epic|feature|task|bug|chore (default: task)
-  -p, --priority string    # 0-4 or P0-P4 (default: 2)
-  -d, --description string # Issue description
-  --parent string          # Parent issue ID for hierarchical child
-  --acceptance string      # Acceptance criteria
-  -l, --labels strings     # Labels (comma-separated)
-  -a, --assignee string    # Assignee
-  --deps strings           # Dependencies on create (type:id format)
-  --json                   # JSON output
-```
-
-### Dependency Management
-
-```bash
-bd dep add <issue> <depends-on> [-t type]  # Add dependency
-bd dep remove <issue> <depends-on>          # Remove dependency
-bd dep tree <issue>                         # Show dependency tree
-bd dep tree <issue> --direction=up          # Show what this blocks
-bd dep cycles                               # Detect cycles
-bd dep list <issue>                         # List dependencies
-```
-
-Dependency types: `blocks` (default), `related`, `parent-child`, `discovered-from`, `tracks`
-
-### Querying Issues
-
-```bash
-bd ready                   # Show ready work (no blockers)
-bd ready --json            # JSON output for parsing
-bd ready --limit 5         # Limit results
-bd ready --assignee name   # Filter by assignee
-bd ready --label backend   # Filter by label
-
-bd list                    # List all open issues
-bd list --all              # Include closed
-bd list --parent bd-XXX    # Children of specific parent
-bd list --status open      # Filter by status
-
-bd show <id>               # Show issue details
-bd show <id> --json        # JSON output
-
-bd blocked                 # Show blocked issues
-bd graph <id>              # ASCII dependency visualization
-bd graph --all             # All open issues
-```
-
-### Updating Issues
-
-```bash
-bd update <id> [flags]
-
-Flags:
-  --status string          # open|in_progress|closed
-  --claim                  # Atomically claim (set in_progress + assignee)
-  --title string           # New title
-  -d, --description string # New description
-  -p, --priority string    # New priority
-  --acceptance string      # Acceptance criteria
-  --add-label strings      # Add labels
-  --remove-label strings   # Remove labels
-```
-
-### Closing Issues
-
-```bash
-bd close <id>              # Close an issue
-bd close <id> -r "reason"  # Close with reason
-bd close <id> --suggest-next  # Show newly unblocked after close
-```
-
-### Epic Management
-
-```bash
-bd epic status <id>        # Show epic completion status
-bd epic close-eligible     # Close epics where all children complete
-```
-
-### Swarm Operations
-
-```bash
-bd swarm validate <epic>   # Validate epic structure for swarming
-bd swarm create <epic>     # Create swarm molecule from epic
-bd swarm status            # Show swarm status
-```
-
-### Sync and Data
-
-```bash
-bd sync                    # Sync with git (export + commit + pull + push)
-bd export -o file.jsonl    # Export to JSONL
-bd import -i file.jsonl    # Import from JSONL
-```
+- **[Swarm Execution Guidance](references/swarm-execution.md)** — Multi-agent coordination patterns, claim/close workflow, conflict avoidance
+- **[Worked Example](references/worked-example.md)** — Complete walkthrough: CLI tool with 3 subcommands, from understanding through validation
+- **[BD Command Reference](references/bd-command-reference.md)** — Full `bd` CLI command reference (create, dep, ready, update, close, sync)
 
 ---
 
@@ -1228,18 +848,6 @@ bd import -i file.jsonl    # Import from JSONL
 **Problem**: No way to triage, paralysis.
 **Fix**: Reserve P0 for true blockers, use P1-P2 for normal work.
 
-### Ignoring Org Callback
-
-**Symptom**: Closing spawned epic without updating source org task.
-**Problem**: Org task remains in WAITING forever; planning layer out of sync with reality.
-**Fix**: Before closing any epic with `source_org_id`, run `complete-to-org` skill to update the org task.
-
-### Closing Epic Before Callback
-
-**Symptom**: Running `bd close` on spawned epic, THEN trying to find source_org_id.
-**Problem**: Source reference may become harder to access after close.
-**Fix**: Extract source_org_id and trigger callback BEFORE closing the epic.
-
 ---
 
 ## Troubleshooting
@@ -1286,42 +894,11 @@ bd sync
 
 ---
 
-## TODO: Pending Adaptations (Medium)
-
-This skill needs substantive adaptation for the sendhelp pipeline:
-
-- [ ] Remove or rewrite Org-Mode Coherence section — org-mode has been
-  replaced by markdown artifacts. The coherence principle (all work should
-  be traceable to planning) still applies but the mechanism changes.
-- [ ] Remove or rewrite Spawned Epics section — spawn-to-beads and
-  complete-to-org are not imported. Epics are created directly from
-  journey-mapping epic definitions.
-- [ ] Adapt Phase 1 (Understanding) to read from journey markdown files
-  instead of receiving a spec/description. Input is now epic definitions
-  from planning/journeys/<slug>.md with Gherkin scenarios and acceptance
-  criteria.
-- [ ] Absorb journey-to-tasks INVEST methodology into Phase 2
-  (Decomposition): walking skeleton identification, Gherkin-to-acceptance
-  mapping, vertical slice preference, 1-4 hour task sizing.
-- [ ] Remove Phase 4 org-mode coherence check. Replace with markdown
-  artifact traceability (each bead references its source journey/feature).
-- [ ] Remove emacsclient commands throughout.
-- [ ] Consider adding Amazon-style quantified success criteria format
-  (before/after metrics) to bead acceptance criteria.
-- [ ] Consider adding Google's degree-of-constraint concept to bead
-  descriptions (how much latitude does the executor have?).
-
-## Attribution
-
-Imported from [beadsmith](https://github.com/user/beadsmith/tree/main/skills/beads-plan).
-Light adaptation: org-mode layer references noted for future rewrite.
-
 ## Related Skills
 
 | Skill | Relationship |
 |-------|--------------|
+| `journey-mapping` | Produces epic definitions that this skill decomposes |
 | `iterative-planning-context` | Produces Planning Context Snapshots consumed during decomposition |
 | `beads-execute` | Executes the beads created by this skill |
-| `spawn-to-beads` | Spawns epics from org-mode tasks |
-| `complete-to-org` | Callbacks when spawned epics complete |
-| `agents-md` | Creates AGENTS.md files that inform codebase context |
+| `validate-pipeline` | Quality gate per bead during execution |

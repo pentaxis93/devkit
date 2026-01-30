@@ -22,27 +22,15 @@ Use this skill when:
 
 ## Methodology
 
-**Chosen:** Hybrid (Opportunity Solution Tree + Story Mapping + Job Stories)
+**Hybrid:** Opportunity Solution Tree + Story Mapping + Job Stories
 
-**Rationale:** Research compared Opportunity Solution Trees (OST), Story Mapping, Jobs-to-be-Done (JTBD), and Impact Mapping. For solo developers or small teams with an established vision:
-
-1. Story Mapping is excellent for release planning but doesn't validate opportunities
-2. OST is rigorous but requires ongoing customer interviews (heavy for solo devs)
-3. JTBD (Job Stories) improves story quality without process overhead
-4. Impact Mapping is too strategic, doesn't help with feature-level detail
-
-The hybrid approach takes:
+Why this combination works:
 - OST's outcome-first hierarchy (Vision -> Outcomes -> Opportunities -> Solutions)
-- Story Mapping's visual release planning (backbone, walking skeleton, slices)
-- Job Story format for articulating opportunities (When..., I want..., So I can...)
-
-### Alternatives Considered
-
-| Methodology | Reason Not Selected | When Appropriate |
-|-------------|---------------------|------------------|
-| Pure Opportunity Solution Trees | Requires regular customer interviews; too heavy for solo developers | Product teams with dedicated discovery time and customer access |
-| Pure Story Mapping | Assumes you know what to build; doesn't challenge opportunity validity | When problem space is well understood, focus is on release planning |
-| Impact Mapping | Strategic/portfolio level; doesn't help with feature granularity | Stakeholder alignment, roadmap communication |
+  prevents building solutions for nonexistent problems
+- Story Mapping's release planning (backbone, walking skeleton, slices) keeps
+  scope manageable and delivery incremental
+- Job Story format (When..., I want..., So I can...) captures context and
+  motivation without persona overhead
 
 ## Core Principles
 
@@ -462,16 +450,14 @@ Now let's define the feature. What's in scope?
 - **Outputs:** planning/features.md with feature entries
 - **Next Steps:** Validate riskiest assumptions before heavy investment; use journey-mapping skill for each feature
 
+## Output Template
+
+For the exact markdown template for `planning/features.md`, see
+[references/features-template.md](references/features-template.md).
+
 ## TODO: Pending Adaptations
 
-- [ ] Define the exact markdown template for planning/features.md (YAML
-  frontmatter + markdown sections per feature). See planning session notes
-  for the proposed format with status/opportunity/evidence/scope fields.
 - [ ] Consider adding GIST ICE scoring (Impact/Confidence/Ease) as an
   alternative prioritization method in Phase 3 to complement the current
   impact/evidence matrix.
 
-## Attribution
-
-Imported from [beadsmith](https://github.com/user/beadsmith/tree/main/skills/feature-discovery).
-Light adaptation: org-mode references changed to markdown.

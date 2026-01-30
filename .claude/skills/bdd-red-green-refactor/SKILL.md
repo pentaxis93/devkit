@@ -1,3 +1,12 @@
+---
+name: bdd-red-green-refactor
+description: >-
+  Execute the TDD inner loop with disciplined red-green-refactor cycles.
+  Use when implementing features test-first, running the BDD cycle of
+  failing test, minimal pass, then refactor, or when you need to
+  maintain test discipline during implementation.
+---
+
 # BDD Red-Green-Refactor Skill
 
 > Version: 1.0.0

@@ -22,32 +22,22 @@ Use this skill when:
 
 ## Methodology
 
-**Chosen:** User Story Mapping + Gherkin BDD
+**User Story Mapping + Gherkin BDD**
 
-**Rationale:** Research compared User Story Mapping, Customer Journey Maps, Service Blueprints, and Gherkin/BDD. For developer workflows:
-
+Why this combination works:
 - Story Mapping provides the big picture and prevents "bag of mulch" backlogs
 - Gherkin provides executable specifications with clear acceptance criteria
-- Together they form a complete requirements-to-implementation pipeline
-
-Customer Journey Maps and Service Blueprints are excellent for team alignment but lack direct handoff to implementation. Story Mapping + Gherkin has the clearest path from requirements to code.
-
-### Alternatives Considered
-
-| Methodology | Reason Not Selected | When Appropriate |
-|-------------|---------------------|------------------|
-| Customer Journey Maps | Focus on emotions/touchpoints, no implementation artifacts | Understanding pain points, cross-team alignment, UX research |
-| Service Blueprints | Shows internal processes, too detailed for solo developers | Complex multi-department services, omnichannel experiences |
+- Together they form the clearest path from requirements to code
 
 ## Core Principles
 
-### 1. The 1922 Test
+### 1. Needs Not Mechanisms
 
-Describe requirements as if explaining to someone in 1922.
+Describe requirements in terms of user needs, not technical mechanisms.
 
 *If you need technology to describe the need, you're describing implementation.*
 
-**Test:** Could someone with no computers understand this requirement?
+**Test:** Could this requirement be satisfied by three completely different technical approaches? If it prescribes a specific mechanism, it belongs in implementation, not requirements.
 
 ### 2. What Not How
 
@@ -172,7 +162,7 @@ For each phase, define:
 | drags and drops | provides the file |
 
 **Validation:**
-- [ ] Would this pass the 1922 test?
+- [ ] Does this describe needs, not mechanisms?
 
 ### Phase 5: Pain Point Identification
 
@@ -241,16 +231,56 @@ Check the readiness criteria:
 
 The first slice should be the "walking skeleton" - minimal but end-to-end.
 
-### Phase 9: Synthesis
+### Phase 9: Epic Definition
+
+**Question:** What epics does this journey produce for beads-plan?
+
+Group the journey's phases and scenarios into one or more epics. Each
+epic is a coherent unit of work that beads-plan will decompose into a
+bead DAG.
+
+1. **Identify epic boundaries.** An epic should deliver observable value.
+   Look for natural groupings: phases that form a complete user flow,
+   scenarios that share a domain, or the walking skeleton as its own epic.
+
+2. **For each epic, define:**
+   - **Title**: Action-oriented name
+   - **Scope**: 1-2 sentences describing what this epic delivers
+   - **Walking skeleton**: Which thin slice (if this is the first epic)
+   - **Acceptance criteria**: Derive from the Gherkin scenarios above.
+     Each criterion traces to a specific scenario.
+   - **Estimated complexity**: S / M / L / XL
+   - **Dependencies**: Other epic titles (from this or other journeys)
+
+3. **Apply the INVEST readiness gate** to each epic:
+   - [ ] **Independent** — Can be planned without waiting on other epics
+   - [ ] **Negotiable** — Scope can adjust without losing core value
+   - [ ] **Valuable** — Delivers observable value to user or system
+   - [ ] **Estimable** — Complexity is understood (S/M/L/XL)
+   - [ ] **Small** — Decomposes into ≤15 beads (if larger, split)
+   - [ ] **Testable** — Acceptance criteria are concrete and verifiable
+
+**Validation:**
+- [ ] At least one epic defined?
+- [ ] Each epic passes the INVEST gate?
+- [ ] Each acceptance criterion traces to a Gherkin scenario?
+- [ ] Walking skeleton epic identified (if applicable)?
+
+### Phase 10: Synthesis
 
 **Question:** Is the journey document complete?
 
-Create planning/journeys/<slug>.md with all sections filled in.
+Create planning/journeys/<slug>.md with all sections filled in:
+persona, goal, phases with touchpoints, Gherkin scenarios, walking
+skeleton, and epic definitions. See
+[references/journey-template.md](references/journey-template.md) for
+the exact format.
 
 **Validation:**
 - [ ] No [REPLACE] placeholders remaining?
 - [ ] All YAML frontmatter fields set (status, feature, created, updated)?
-- [ ] `status` set appropriately?
+- [ ] Epics section populated with at least one epic?
+- [ ] `status` set to `ready`?
 
 ---
 
@@ -350,7 +380,7 @@ journey
 | UI Scripting | Gherkin mentioning buttons/fields breaks when UI changes | Use intent verbs and domain language |
 | Multiple Behaviors Per Scenario | Unclear which behavior failed | Split into one scenario per behavior |
 | Orphan Scenarios | Scenarios without journey context cause maintenance confusion | Always trace back to phases and features |
-| Implementation Leakage | References to databases/APIs couple tests to implementation | Apply 1922 test; use domain language |
+| Implementation Leakage | References to databases/APIs couple tests to implementation | Describe needs, not mechanisms; use domain language |
 | Untestable Outcomes | "Then user is happy" can't be verified | Outcomes must be observable and specific |
 | Background Bloat | Long Background makes scenarios confusing | Keep to 1-4 lines max |
 
@@ -358,18 +388,21 @@ journey
 
 ## Quality Checklist
 
-Before spawning implementation tasks:
+Before handing off to beads-plan:
 
 - [ ] Journey has PERSONA and GOAL defined
 - [ ] Journey has 3-6 phases covering the complete flow
 - [ ] Each phase has User Action and System Response
-- [ ] Touchpoints pass the 1922 test (no technology details)
+- [ ] Touchpoints describe needs, not mechanisms (no technology details)
 - [ ] Gherkin scenarios are declarative (no UI scripting)
 - [ ] Each scenario has exactly one When-Then pair
 - [ ] Happy path scenarios cover all phases
 - [ ] Key error cases have scenarios
 - [ ] First slice (walking skeleton) is identified
-- [ ] Journey `status` frontmatter is set to 'ready' or 'scenarios-complete'
+- [ ] At least one epic defined
+- [ ] Each epic passes the INVEST readiness gate
+- [ ] Each epic's acceptance criteria trace to Gherkin scenarios
+- [ ] Journey `status` frontmatter is set to `ready`
 - [ ] `feature` frontmatter references parent feature
 - [ ] No [REPLACE] placeholders remaining
 
@@ -443,6 +476,45 @@ Notice how these are declarative - no commands, file paths, or error messages.
 - [X] Scenarios cover happy path and error cases
 - [X] First slice identified
 
+Now let's define the epics.
+
+The walking skeleton covers all four phases end-to-end with the happy
+path. That's our first epic. Error handling and edge cases are a second.
+
+### Epic: First Deployment Happy Path
+
+**Scope:** End-to-end deployment from install through verification,
+covering the standard project structure path only.
+
+**Walking skeleton:** Yes — this is the thin slice.
+
+**Acceptance criteria:**
+1. Tool recognizes standard project structure — from Scenario: Tool recognizes standard project structure
+2. Deployment completes successfully — from Scenario: Successful deployment
+3. Developer can verify deployment worked — from Scenario: Status check after deployment
+
+**Estimated complexity:** M
+
+**Dependencies:** None
+
+### Epic: Deployment Error Handling
+
+**Scope:** Graceful handling of non-standard structures, failed
+deployments, and recovery paths.
+
+**Acceptance criteria:**
+1. Non-standard structure gets clear guidance — from Scenario: Tool handles unrecognized project structure
+2. Failed deployment provides actionable error — from Scenario: Deployment failure with clear error
+3. Recovery path works after failure — from Scenario: Re-deploy after fixing issue
+
+**Estimated complexity:** M
+
+**Dependencies:** First Deployment Happy Path
+
+INVEST check: Both epics pass — independent (second depends on first
+but is independently plannable), negotiable, valuable, estimable,
+small, testable.
+
 Your journey is ready. Saving to planning/journeys/first-deployment.md.
 
 ---
@@ -464,27 +536,12 @@ Your journey is ready. Saving to planning/journeys/first-deployment.md.
 - **Time Estimate:** 45-90 minutes per journey
 - **Prerequisites:** Feature exists in planning/features.md; planning/journeys/ directory exists
 - **Outputs:** planning/journeys/<slug>.md with Gherkin scenarios
-- **Next Steps:** Use journey-to-tasks skill to spawn implementation tasks
+- **Next Steps:** Use beads-plan skill to decompose epics into executable bead DAGs
 
-## TODO: Pending Adaptations (Medium)
+## Output Template
 
-This skill needs substantive adaptation to absorb journey-to-tasks
-functionality and serve as the planning-to-execution handoff point:
+For the exact markdown template for `planning/journeys/<slug>.md`, see
+[references/journey-template.md](references/journey-template.md). The
+template includes the Epics section and INVEST readiness gate that serve
+as the handoff contract to beads-plan.
 
-- [ ] Absorb journey-to-tasks readiness gating (INVEST validation,
-  Definition of Ready checklist) into this skill's workflow
-- [ ] Add an Epics section to the journey output format where each journey
-  maps to one or more coarse epics with title, description, walking
-  skeleton, and Gherkin-derived acceptance criteria
-- [ ] Define the exact markdown template for planning/journeys/<slug>.md
-  with YAML frontmatter (status, feature, created, updated)
-- [ ] The epic definitions in this output become the input to beads-plan.
-  Ensure the handoff contract is explicit: what fields does beads-plan
-  expect from each epic definition?
-- [ ] Absorb spawn-to-beads delegation criteria (effort >2h,
-  parallelization potential) into epic identification
-
-## Attribution
-
-Imported from [beadsmith](https://github.com/user/beadsmith/tree/main/skills/journey-mapping).
-Light adaptation: org-mode references changed to markdown.

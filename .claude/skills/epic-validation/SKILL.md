@@ -1,3 +1,12 @@
+---
+name: epic-validation
+description: >-
+  Validate epic quality after 100% bead completion. Checks integration,
+  documentation synthesis, codebase hygiene, and test coverage before
+  declaring an epic truly complete. Use when all beads in an epic are
+  closed and the epic is ready for final sign-off.
+---
+
 # Epic Validation Skill
 
 > Version: 1.0.0
@@ -136,7 +145,7 @@ Produce structured validation report.
 
 ```json
 {
-  "epic_id": "beadsmith-e12",
+  "epic_id": "bd-e12",
   "validation_date": "2026-01-25T16:00:00Z",
   "verdict": "pass_with_warnings",
   "summary": "2 warnings, 0 errors",
@@ -166,7 +175,7 @@ Produce structured validation report.
           "message": "TODO marker found for closed bead",
           "file": "src/lib.rs",
           "line": 42,
-          "bead_id": "beadsmith-e12.3"
+          "bead_id": "bd-e12.3"
         }
       ]
     },
@@ -220,8 +229,8 @@ When overriding a validation warning:
 3. **Document in report**:
    ```json
    "overrides": [{
-     "finding": "TODO marker for beadsmith-e12.3",
-     "justification": "Phase 2 work, tracked in beadsmith-e13.1"
+     "finding": "TODO marker for bd-e12.3",
+     "justification": "Phase 2 work, tracked in bd-e13.1"
    }]
    ```
 
@@ -272,14 +281,14 @@ Before completing epic validation:
 
 ```bash
 # Epic at 100%
-$ bd epic status beadsmith-e12
-beadsmith-e12: 14/14 beads closed (100%)
+$ bd epic status bd-e12
+bd-e12: 14/14 beads closed (100%)
 
 # Run validation
 $ # (invoke epic-validation skill)
 
 === Epic Validation Report ===
-Epic: beadsmith-e12
+Epic: bd-e12
 
 Integration: PASSED
   - Integration tests: N/A (no tests/integration/)
@@ -299,7 +308,7 @@ Coverage: SKIPPED
   - No .beads/coverage-config.yaml
 
 Verdict: PASS_WITH_WARNINGS (1 override documented)
-Report archived: .beads/reports/beadsmith-e12-validation.json
+Report archived: .beads/reports/bd-e12-validation.json
 
 === Epic Complete! ===
 ```
@@ -309,5 +318,4 @@ Report archived: .beads/reports/beadsmith-e12-validation.json
 ## References
 
 - [skills/validate-pipeline](../skills/validate-pipeline/) - Per-bead validation
-- [skills/complete-to-org](../skills/complete-to-org/) - Epic completion callback
-- [commands/beads-loop.md](../commands/beads-loop.md) - Loop termination
+- Update source journey file frontmatter status to `completed` when epic passes validation

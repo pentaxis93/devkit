@@ -56,10 +56,10 @@ headers) increases the chance of a search hit.
 
 Skill directory names should be:
 
-- **Verb-first, active voice**: `creating-skills` not `skill-creation`
-- **Descriptive of action or insight**: `condition-based-waiting` not
-  `async-test-helpers`
-- **Gerunds for processes**: `debugging-with-logs`, `testing-skills`
+- **Verb-noun for actions**: `find-bugs`, `validate-pipeline`
+- **Noun-compound for capabilities**: `feature-discovery`, `vision-workshop`
+- **Tool-first for tool-scoped**: `beads-plan`, `mcp-builder`
+- **Descriptive over generic**: `feature-discovery` not `utils`
 
 ## Token Efficiency
 

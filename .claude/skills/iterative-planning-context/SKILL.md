@@ -1,3 +1,14 @@
+---
+name: iterative-planning-context
+description: >-
+  Acquire codebase context for planning changes to existing code.
+  Produces a Planning Context Snapshot with structure maps, conventions,
+  integration points, and core abstractions. Use before decomposing
+  work on an existing codebase, when preparing for beads-plan, or when
+  you need to understand where new code should live and what patterns
+  to follow.
+---
+
 # Iterative Planning Context Skill
 
 > Version: 1.0.0
@@ -400,7 +411,7 @@ Before completing:
 
 ```
 # Phase 0: Scope Definition
-Change: Fix bug in skill extraction (beadsmith init)
+Change: Fix bug in skill extraction (project init)
 Classification: Bug fix
 Focus: commands/init.rs
 Questions: What's the extraction logic? How do I test it?
@@ -424,7 +435,7 @@ Time budget: 15 min
 # Phase 0: Scope Definition
 Change: Add /beads-iterate command for iterative planning
 Classification: Major feature
-Focus: CLI commands, skill system, org-beads integration
+Focus: CLI commands, skill system, pipeline integration
 Questions:
   1. Where do new commands live?
   2. What patterns do commands follow?
@@ -435,10 +446,10 @@ Time budget: 45 min
 # Phase 1: Orientation (5 min)
 - README.md exists - project is Rust CLI, skills bundled at compile time
 - docs/codebase-overview.md exists - detailed structure guide!
-- planning/ exists - org-mode planning system in use
+- planning/ exists - markdown planning artifacts in use
 
 # Phase 2: Structure Mapping (10 min)
-crates/beadsmith/src/
+crates/mytool/src/
 ├── main.rs         # CLI entry, Commands enum
 │                   # NEW COMMANDS: Add variant, add match arm
 ├── skills.rs       # Skill bundling via include_str!()
@@ -448,7 +459,7 @@ crates/beadsmith/src/
 
 skills/
 ├── codebase-exploration/  # Related! Produces understanding
-├── spawn-to-beads/        # Integration pattern
+├── beads-plan/            # Decomposition skill
 
 Adding New Code:
 | Type | Location | Pattern |
@@ -479,7 +490,7 @@ Answers:
 3. Should be SKILL primarily (methodology); command optional later
 4. Output feeds into beads-plan for decomposition
 
-Context Snapshot: docs/planning/context-beadsmith.md
+Context Snapshot: docs/planning/context-mytool.md
 ```
 
 ---
@@ -490,7 +501,6 @@ Context Snapshot: docs/planning/context-beadsmith.md
 |-------|--------------|
 | `codebase-exploration` | General exploration methodology; this skill adds planning-specific focus |
 | `beads-plan` | Consumes Planning Context Snapshot for decomposition |
-| `spawn-to-beads` | May be used after planning to delegate to beads |
 
 ---
 

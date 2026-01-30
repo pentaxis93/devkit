@@ -53,47 +53,40 @@ and maintain them:
 
 ### Pipeline status
 
-The pipeline was imported from [beadsmith](https://github.com/user/beadsmith)
-with light adaptations (org-mode references changed to markdown). Medium
-adaptations are pending — see TODO sections in each skill's SKILL.md for
-details. Key pending work:
-
-- journey-mapping needs to absorb journey-to-tasks functionality (epic
-  identification, readiness gating, INVEST methodology)
-- beads-plan needs to accept epic definitions from journey markdown files
-  instead of abstract specs
-- beads-execute needs org-mode callback references removed
-- Markdown artifact templates (vision.md, features.md, journeys/*.md)
-  need to be finalized
+Each pipeline stage produces a markdown artifact with a defined template
+(see `references/` in each skill's directory). The handoff between
+stages is explicit: each artifact references its upstream source, and
+the journey file's Epics section serves as the contract between the
+planning and execution layers.
 
 ## Skills
 
 ### Pipeline core
 
-| Skill | Description | Source | Status |
-|-------|-------------|--------|--------|
-| `vision-workshop` | Product vision using Product Vision Board methodology | [beadsmith](https://github.com/user/beadsmith/tree/main/skills/vision-workshop) | Adapted |
-| `feature-discovery` | Feature discovery using OST + Story Mapping + Job Stories | [beadsmith](https://github.com/user/beadsmith/tree/main/skills/feature-discovery) | Adapted |
-| `journey-mapping` | User journeys with Gherkin scenarios and epic definitions | [beadsmith](https://github.com/user/beadsmith/tree/main/skills/journey-mapping) | Adapted |
-| `beads-plan` | Decompose epics into executable bead DAGs | [beadsmith](https://github.com/user/beadsmith/tree/main/skills/beads-plan) | Adapted |
-| `beads-execute` | Execute beads with claim/work/close workflow | [beadsmith](https://github.com/user/beadsmith/tree/main/skills/beads-execute) | Adapted |
+| Skill | Description |
+|-------|-------------|
+| `vision-workshop` | Product vision using Product Vision Board methodology |
+| `feature-discovery` | Feature discovery using OST + Story Mapping + Job Stories |
+| `journey-mapping` | User journeys with Gherkin scenarios and epic definitions |
+| `beads-plan` | Decompose epics into executable bead DAGs |
+| `beads-execute` | Execute beads with claim/work/close workflow |
 
 ### Pipeline supporting
 
-| Skill | Description | Source | Status |
-|-------|-------------|--------|--------|
-| `validate-pipeline` | Quality gate per bead (tests, lint, format) | [beadsmith](https://github.com/user/beadsmith/tree/main/skills/validate-pipeline) | Vendored |
-| `epic-validation` | Epic-level quality gate at 100% completion | [beadsmith](https://github.com/user/beadsmith/tree/main/skills/epic-validation) | Vendored |
-| `iterative-planning-context` | Codebase context snapshots for planning | [beadsmith](https://github.com/user/beadsmith/tree/main/skills/iterative-planning-context) | Vendored |
+| Skill | Description |
+|-------|-------------|
+| `validate-pipeline` | Quality gate per bead (tests, lint, format) |
+| `epic-validation` | Epic-level quality gate at 100% completion |
+| `iterative-planning-context` | Codebase context snapshots for planning |
 
 ### BDD
 
-| Skill | Description | Source | Status |
-|-------|-------------|--------|--------|
-| `bdd-scenario-design` | Gherkin scenario design from acceptance criteria | [beadsmith](https://github.com/user/beadsmith/tree/main/skills/bdd-scenario-design) | Vendored |
-| `bdd-step-implementation` | Step definitions wired to test fixtures | [beadsmith](https://github.com/user/beadsmith/tree/main/skills/bdd-step-implementation) | Vendored |
-| `bdd-red-green-refactor` | TDD inner loop discipline | [beadsmith](https://github.com/user/beadsmith/tree/main/skills/bdd-red-green-refactor) | Vendored |
-| `bdd-scenario-evolution` | Scenario maintenance as code evolves | [beadsmith](https://github.com/user/beadsmith/tree/main/skills/bdd-scenario-evolution) | Vendored |
+| Skill | Description |
+|-------|-------------|
+| `bdd-scenario-design` | Gherkin scenario design from acceptance criteria |
+| `bdd-step-implementation` | Step definitions wired to test fixtures |
+| `bdd-red-green-refactor` | TDD inner loop discipline |
+| `bdd-scenario-evolution` | Scenario maintenance as code evolves |
 
 ### Cross-cutting
 
@@ -107,47 +100,28 @@ details. Key pending work:
 |-------|-------------|--------|--------|
 | `commit` | Conventional commits with SourceHut issue trailers | [getsentry/skills](https://github.com/getsentry/skills/tree/main/plugins/sentry-skills/skills/commit) | Adapted |
 | `find-bugs` | Branch diff review for bugs and security issues | [getsentry/skills](https://github.com/getsentry/skills/tree/main/plugins/sentry-skills/skills/find-bugs) | Adapted |
-| `doc-coauthoring` | Structured doc co-authoring workflow | [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/doc-coauthoring) | Vendored |
-| `mcp-builder` | MCP server development guide | [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/mcp-builder) | Vendored |
-| `webapp-testing` | Playwright-based web app testing | [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/webapp-testing) | Vendored |
-| `creating-skills` | Guide for creating skills using BDD | [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/skill-creator) + [obra/superpowers-skills](https://github.com/obra/superpowers-skills/tree/main/skills/meta/writing-skills) | Blended |
+| `doc-coauthoring` | Structured doc co-authoring workflow | [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/doc-coauthoring) | Upstream |
+| `mcp-builder` | MCP server development guide | [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/mcp-builder) | Upstream |
+| `webapp-testing` | Playwright-based web app testing | [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/webapp-testing) | Upstream |
+| `skill-creator` | Guide for creating skills using BDD | [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/skill-creator) + [obra/superpowers-skills](https://github.com/obra/superpowers-skills/tree/main/skills/meta/writing-skills) | Blended |
 
 **Status key:**
-- **Vendored**: Copied from upstream with attribution. Safe to update.
-- **Adapted**: Modified from upstream. Check diff before updating.
-- **Blended**: Synthesized from multiple upstreams. Maintained independently.
+- **Upstream**: Copied from source with attribution. Safe to update from source.
+- **Adapted**: Modified from source. Check diff before updating.
+- **Blended**: Synthesized from multiple sources. Maintained independently.
 
 ## Customizations
 
-The following skills were modified from their upstream sources:
+The following external skills were modified from their upstream sources:
 
-- **vision-workshop, feature-discovery, journey-mapping**: Org-mode output
-  references changed to markdown (planning/*.md). Medium adaptations
-  pending — see TODO sections in each SKILL.md.
-- **beads-plan**: Org-mode layer references noted for future rewrite.
-  Medium adaptation pending — needs to accept epic input from journey
-  markdown instead of abstract specs.
-- **beads-execute**: Org-mode callback and agent-specific references noted.
 - **writing-clearly-and-concisely**: Reference file moved to `references/`
   subdirectory. Frontmatter description rewritten for ASO.
 - **commit**: Issue references use SourceHut `todo.sr.ht` trailers
   instead of GitHub/Sentry refs.
 - **find-bugs**: Default branch detection uses `git` instead of `gh`
   (GitHub CLI) since the project is hosted on SourceHut.
-- **creating-skills**: Blended from Anthropic's `skill-creator` and obra's
+- **skill-creator**: Blended from Anthropic's `skill-creator` and obra's
   `writing-skills`. See the skill's attribution section for details.
-
-## Not Imported
-
-The following beadsmith skills were deliberately not imported:
-
-| Skill | Reason |
-|-------|--------|
-| `journey-to-tasks` | Methodology absorbed into journey-mapping (readiness gating, epic identification) and beads-plan (INVEST, walking skeleton, Gherkin mapping) |
-| `spawn-to-beads` | Org-mode plumbing. Delegation criteria absorbed into journey-mapping. |
-| `spawn-readiness` | Org-mode plumbing. Readiness checking absorbed into journey-mapping gate. |
-| `complete-to-org` | Org-mode plumbing. Not needed without org layer. |
-| `org-planning` | Entirely org-mode specific. |
 
 ## Architecture
 
@@ -173,7 +147,7 @@ and test the skill.
 | **Discipline** | Behavior enforcement with compliance requirements | commit, BDD workflows |
 
 Skill type determines testing approach and degree of freedom. See
-`creating-skills` for full guidance.
+`skill-creator` for full guidance.
 
 ### Directory Structure
 
@@ -216,7 +190,7 @@ context: fork                       # Run in sub-agent
 The `description` field is the primary discovery mechanism. Agents read it
 to decide whether to load the skill. Write it for Agent Search Optimization
 (ASO) -- include trigger conditions, symptoms, and keywords that an agent
-would search for. See `creating-skills/references/discovery.md` for guidance.
+would search for. See `skill-creator/references/discovery.md` for guidance.
 
 ### Writing Style
 
@@ -227,11 +201,29 @@ most effectively.
 
 ### Naming Conventions
 
-- **Verb-first, active voice**: `creating-skills` not `skill-creation`
+Skill names are primarily for human readability. Agent discovery depends
+on the `description` field (see Frontmatter Standards below), not the
+name. Choose names that are scannable in a directory listing and
+unambiguous when a user types `/skill-name`.
+
+**Name by skill type:**
+
+| Skill Type | Pattern | Examples |
+|------------|---------|----------|
+| Imperative action | verb-noun | `find-bugs`, `create-pr`, `validate-pipeline` |
+| Methodology or capability | noun-compound | `vision-workshop`, `code-review`, `feature-discovery` |
+| Tool-scoped | tool-first | `beads-plan`, `mcp-builder`, `beads-execute` |
+| Related family | shared prefix | `bdd-scenario-design`, `bdd-step-implementation` |
+
+See `docs/decisions/0004-skill-naming-convention.md` for the ecosystem
+research behind this convention.
+
+**General rules:**
+
 - **Lowercase hyphenated**: `root-cause-tracing` not `rootCauseTracing`
-- **Descriptive over generic**: `condition-based-waiting` not `async-helpers`
+- **Descriptive over generic**: `feature-discovery` not `utils`
 - **Directory name = frontmatter name**: must match exactly
-- **1-64 characters**, no leading/trailing hyphens, no consecutive hyphens
+- **8-20 characters typical**, max 64, no leading/trailing or consecutive hyphens
 
 ### Provider Agnosticism
 
@@ -251,13 +243,17 @@ Both Claude Code and OpenCode discover skills from
 it recognizes and ignores the rest, so a single SKILL.md works for both
 without loss of functionality.
 
-## Vendor Tracking
+## Attribution and Upstream Tracking
 
-Skills copied from upstream repos include attribution links in their
-`SKILL.md` files. The **Status** column in the skills table above
-indicates how each skill relates to its upstream:
+Some development tooling and cross-cutting skills are imported from
+open-source repos. These include attribution links in their `SKILL.md`
+files. The **Status** column in the development tooling and cross-cutting
+tables indicates how each relates to its source:
 
-- **Vendored** skills can be updated by re-fetching from upstream.
-- **Adapted** skills should be diffed against upstream before updating.
-- **Blended** skills are maintained independently; upstream changes are
+- **Upstream** skills can be updated by re-fetching from the source repo.
+- **Adapted** skills should be diffed against source before updating.
+- **Blended** skills are maintained independently; source changes are
   evaluated but not automatically incorporated.
+
+Pipeline, supporting, and BDD skills are original project code and have
+no external upstream.

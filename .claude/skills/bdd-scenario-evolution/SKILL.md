@@ -1,3 +1,12 @@
+---
+name: bdd-scenario-evolution
+description: >-
+  Maintain BDD scenarios and fixtures as code evolves. Use when updating
+  Gherkin scenarios after code changes, refactoring step definitions,
+  managing fixture drift, or keeping test specifications in sync with
+  implementation changes.
+---
+
 # BDD Scenario Evolution Skill
 
 > Version: 1.0.0

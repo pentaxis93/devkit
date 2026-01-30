@@ -1,5 +1,5 @@
 ---
-name: creating-skills
+name: skill-creator
 description: >-
   Guide for creating effective agent skills using BDD (Behavior-Driven
   Development). Use when creating new skills, editing existing skills,
@@ -283,7 +283,7 @@ After deployment, use the skill on real tasks:
 
 ## Naming Conventions
 
-- **Verb-first, active voice**: `creating-skills` not `skill-creation`
+- **Descriptive over generic**: `feature-discovery` not `utils`
 - **Lowercase hyphenated**: `root-cause-tracing` not `rootCauseTracing`
 - **Descriptive over generic**: `condition-based-waiting` not `async-helpers`
 - **Directory name = frontmatter name**: must match exactly

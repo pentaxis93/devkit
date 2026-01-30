@@ -1,3 +1,12 @@
+---
+name: bdd-step-implementation
+description: >-
+  Write BDD step definitions and wire them to test fixtures. Use when
+  implementing Given/When/Then steps, connecting Gherkin scenarios to
+  test code, or setting up BDD test infrastructure with step functions
+  and fixture wiring.
+---
+
 # BDD Step Implementation Skill
 
 > Version: 1.0.0
