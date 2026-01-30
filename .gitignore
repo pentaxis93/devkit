@@ -1,8 +1,8 @@
 # Template repo gitignore (for sendhelp template development)
 # Generated projects get their own .gitignore from template/.gitignore
 
-# OpenCode runtime files
-.opencode/
+# OpenCode runtime files (root only, not template/)
+/.opencode/
 
 # Python
 __pycache__/

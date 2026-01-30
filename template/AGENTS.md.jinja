@@ -1,0 +1,52 @@
+# {{ project_name }}
+
+## Quick Reference
+
+| Task | Command |
+|------|---------|
+| Build | `TODO` |
+| Test | `TODO` |
+| Lint | `TODO` |
+
+## Credential Hygiene
+
+- Never read credential values into conversation context
+- Verify credentials exist without exposing: `pass show X > /dev/null && echo "exists"`
+- If credentials are accidentally exposed, immediately advise rotation
+
+## Git Workflow
+
+- All changes via pull requests. Never commit directly to `main`.
+- Branch prefixes: `feature/`, `fix/`, `docs/`, `refactor/`, `chore/`
+- After creating PR: switch to `main`, delete local feature branch.
+
+## Code Style
+
+- TODO: Add project-specific conventions here
+
+## Gotchas
+
+- TODO: Add project-specific gotchas as they're discovered
+
+## Planning Pipeline
+
+Start with `/vision-workshop` for new projects. The pipeline flows:
+vision → features → journeys → beads-plan → beads-execute
+
+## Available Skills
+
+| Skill | When to Use |
+|-------|-------------|
+| `/vision-workshop` | New project or feature vision |
+| `/feature-discovery` | Break vision into features |
+| `/journey-mapping` | Map user journeys with Gherkin scenarios |
+| `/beads-plan` | Decompose epic into task DAG |
+| `/beads-execute` | Execute a bead task |
+| `/epic-validation` | Validate completed epic |
+| `/coherence-audit` | Audit when discrepancies appear |
+| `/commit` | Create conventional commit |
+
+## See Also
+
+- Skills catalog: `.claude/skills/README.md`
+- Decision records: `docs/decisions/`

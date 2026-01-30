@@ -1,0 +1,48 @@
+# Contributing to {{ project_name }}
+
+## Getting Started
+
+1. Clone the repository
+2. Copy `.env.example` to `.env` and fill in your keys
+3. Install dependencies (see README.md)
+
+## Development Workflow
+
+### Branching
+
+- All changes via pull requests -- never commit directly to `main`
+- Branch prefixes: `feature/`, `fix/`, `docs/`, `refactor/`, `chore/`
+
+### Commits
+
+Use [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat: add user authentication
+fix: handle empty input in search
+docs: update API reference
+refactor: extract validation logic
+chore: update dependencies
+```
+
+Use the `/commit` skill for guided commit message creation.
+
+### Planning Pipeline
+
+This project uses a structured planning-to-execution pipeline:
+
+1. `/vision-workshop` -- Capture project or feature vision
+2. `/feature-discovery` -- Break vision into features
+3. `/journey-mapping` -- Map user journeys with scenarios
+4. `/beads-plan` -- Decompose epics into tasks
+5. `/beads-execute` -- Execute tasks
+
+### Decision Records
+
+Record significant decisions in `docs/decisions/` using MADR format.
+See existing decisions for examples. Number sequentially (0001, 0002, ...).
+
+## Code Review
+
+- All PRs require review before merge
+- Use the `/find-bugs` skill for automated review

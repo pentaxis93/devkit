@@ -116,6 +116,8 @@ pipeline skill, verify:
 | Skill | Description | Source | Status |
 |-------|-------------|--------|--------|
 | `writing-clearly-and-concisely` | Strunk's Elements of Style for prose | [obra/the-elements-of-style](https://github.com/obra/the-elements-of-style) | Adapted |
+| `voice-coauthoring` | Optimize responses for voice-reading users | Original | Original |
+| `agents-md` | Create and optimize AGENTS.md files | [pentaxis93/beadsmith](https://github.com/pentaxis93/beadsmith) | Adapted |
 
 ### Development tooling
 

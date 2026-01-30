@@ -1,2 +1,23 @@
-# OpenCode runtime
-.opencode/
+# OpenCode runtime (but keep commands/)
+.opencode/*
+!.opencode/commands/
+
+# Environment variables (credentials)
+.env
+.env.local
+.env.*.local
+
+# Personal agent overrides
+AGENTS.local.md
+**/AGENTS.local.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

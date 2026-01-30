@@ -10,6 +10,9 @@ _subdirectory: template
 # Files to skip if they already exist (preserve user customizations on update)
 _skip_if_exists:
   - ".gitignore"
+  - "AGENTS.md"
+  - "CHANGELOG.md"
+  - "CONTRIBUTING.md"
   - "docs/decisions/*"
   - "planning/*"
 
