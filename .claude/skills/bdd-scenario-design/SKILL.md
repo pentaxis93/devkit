@@ -304,9 +304,14 @@ After completing scenario design:
 
 ---
 
+## Related Skills
+
+| Skill | Relationship |
+|-------|--------------|
+| `journey-mapping` | Produces Gherkin scenarios consumed as input |
+| `bdd-step-implementation` | Next step: implements step definitions from scenarios |
+
 ## References
 
 - [Gherkin Reference](https://cucumber.io/docs/gherkin/reference/) - Full syntax documentation
 - [rstest-bdd](https://github.com/oknozor/rstest-bdd) - Rust BDD framework
-- [docs/adr/005-bdd-integration.md](../docs/adr/005-bdd-integration.md) - Architecture decision
-- [skills/bdd-step-implementation](../skills/bdd-step-implementation/) - Next skill in workflow

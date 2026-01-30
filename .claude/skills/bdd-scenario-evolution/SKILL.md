@@ -337,8 +337,10 @@ running 15 tests
 
 ---
 
-## References
+## Related Skills
 
-- [docs/fixture-registry.md](../docs/fixture-registry.md) - Fixture governance
-- [skills/bdd-scenario-design](../skills/bdd-scenario-design/) - Scenario creation
-- [skills/fixture-validate](../skills/fixture-validate/) - Fixture validation
+| Skill | Relationship |
+|-------|--------------|
+| `bdd-scenario-design` | Original scenario creation (this skill maintains them) |
+| `bdd-red-green-refactor` | Code changes that trigger scenario updates |
+| `fixture-validate` | Validates fixture integrity after scenario/fixture changes |

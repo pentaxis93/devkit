@@ -191,6 +191,44 @@ tool that doesn't exist in this project.
 says "pipeline skill," it means every skill in the pipeline tables —
 not just the 5 core stages.
 
+## Fifth Audit (full pipeline including BDD skills)
+
+Ran 35 checks: 12 checklist items on 2 new skills, 8 bidirectional
+cross-reference checks, 4 modified-skill re-verifications, 11 full
+handoff chain contracts.
+
+**Result: 34 PASS, 1 DISCREPANCY.**
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| D1 | 3 BDD skills lacked Related Skills tables; 2 had broken references to beadsmith docs | Medium |
+
+The `fixture-validate` import created a cross-reference to
+`bdd-scenario-evolution`, which had never been audited. Expanding scope
+revealed all 3 remaining BDD skills (`bdd-scenario-design`,
+`bdd-red-green-refactor`, `bdd-scenario-evolution`) had informal
+References sections with broken links instead of proper Related Skills
+tables.
+
+**Root cause:** Prior audits scoped to "core + supporting" skills. BDD
+skills were "pipeline-adjacent" and excluded. The fixture-validate
+import bridged the gap, exposing the inconsistency.
+
+**Fixes:**
+- Added Related Skills tables to all 3 BDD skills
+- Removed broken references to beadsmith docs (`docs/adr/005-bdd-
+  integration.md`, `docs/fixture-registry.md`)
+- Preserved valid external references (Gherkin docs, rstest-bdd, Kent Beck)
+
+**Full handoff chain verified (11/11 PASS):** vision-workshop →
+feature-discovery → journey-mapping → beads-plan → beads-execute →
+validate-pipeline → fixture-validate → decision-audit → epic-validation
+→ coherence-audit, plus completion callback.
+
+**Process assessment:** No new process fix needed. The README checklist
+already says "Applies to ALL pipeline skills (core, supporting, and
+BDD)." All 23 skills now have Related Skills tables where applicable.
+
 ## Accepted Residual
 
 - journey-mapping at 557 lines — the Epic Definition phase is core

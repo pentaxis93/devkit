@@ -330,8 +330,13 @@ If a cycle takes longer than 15 minutes, the step is too large.
 
 ---
 
+## Related Skills
+
+| Skill | Relationship |
+|-------|--------------|
+| `bdd-step-implementation` | Produces step definitions consumed as input |
+| `bdd-scenario-evolution` | Maintain scenarios after refactoring changes code |
+
 ## References
 
 - "Test Driven Development by Example" - Kent Beck
-- [skills/bdd-step-implementation](../skills/bdd-step-implementation/) - Input step definitions
-- [skills/bdd-scenario-evolution](../skills/bdd-scenario-evolution/) - Adapting scenarios
