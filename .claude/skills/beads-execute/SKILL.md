@@ -611,6 +611,7 @@ bd epic status <epic-id>
 |-------|--------------|
 | `beads-plan` | Creates the bead DAG that this skill executes |
 | `validate-pipeline` | Quality gate invoked before closing each bead |
+| `decision-audit` | Record quality trade-offs during execution |
 | `epic-validation` | Quality gate at 100% epic completion |
 
 ---

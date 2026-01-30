@@ -272,3 +272,5 @@ LOOP:
 |-------|--------------|
 | `beads-execute` | Invokes this skill at step 5 (VERIFY COMPLETION) before closing a bead |
 | `epic-validation` | Runs after all beads close; this skill validates individual beads |
+| `fixture-validate` | Fixture registry integrity check (hybrid gate step) |
+| `decision-audit` | Structured format for recording hybrid gate override justifications |

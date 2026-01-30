@@ -337,4 +337,5 @@ must be updated or deleted, never left stale.
 |-------|--------------|
 | `validate-pipeline` | Per-bead validation (this skill validates the whole epic) |
 | `coherence-audit` | Invoke when validation reveals systemic discrepancies |
+| `decision-audit` | Review accumulated quality trade-offs during post-epic review |
 | `beads-execute` | Executes beads; this skill runs after all beads close |

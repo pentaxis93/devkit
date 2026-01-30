@@ -38,6 +38,8 @@ mapping defines epics, beads-plan decomposes them.
 | `validate-pipeline` | Quality gate per bead during execution |
 | `epic-validation` | Quality gate at 100% epic completion |
 | `coherence-audit` | Systematic audit when discrepancies reveal systemic issues |
+| `decision-audit` | Record and query quality trade-offs during execution |
+| `fixture-validate` | BDD fixture registry integrity check (hybrid gate) |
 | `iterative-planning-context` | Codebase context for beads-plan decomposition |
 
 ### BDD skills (pipeline-adjacent)
@@ -95,6 +97,8 @@ editing a pipeline skill, verify:
 | `validate-pipeline` | Quality gate per bead (tests, lint, format) |
 | `epic-validation` | Epic-level quality gate at 100% completion |
 | `coherence-audit` | Systematic audit when discrepancies reveal systemic issues |
+| `decision-audit` | Record and query quality trade-offs during execution |
+| `fixture-validate` | BDD fixture registry integrity check (hybrid gate) |
 | `iterative-planning-context` | Codebase context snapshots for planning |
 
 ### BDD

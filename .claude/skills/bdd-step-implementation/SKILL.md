@@ -367,9 +367,14 @@ After completing step implementation:
 
 ---
 
+## Related Skills
+
+| Skill | Relationship |
+|-------|--------------|
+| `bdd-scenario-design` | Produces feature files consumed as input |
+| `bdd-red-green-refactor` | Next step: implements code to make steps pass |
+| `fixture-validate` | Validates fixture registry integrity referenced by step definitions |
+
 ## References
 
 - [rstest-bdd documentation](https://github.com/oknozor/rstest-bdd)
-- [docs/fixture-registry.md](../docs/fixture-registry.md) - Fixture structure
-- [skills/bdd-scenario-design](../skills/bdd-scenario-design/) - Input feature files
-- [skills/bdd-red-green-refactor](../skills/bdd-red-green-refactor/) - Next step in workflow
