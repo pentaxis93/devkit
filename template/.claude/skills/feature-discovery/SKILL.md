@@ -88,6 +88,34 @@ Slice features horizontally into releasable increments.
 
 **Output:** planning/features.md with feature entries
 
+### Phase 0: Triage
+
+**Question:** Does the user already know what to build?
+
+Before running the full discovery workflow, assess whether it's needed. Read
+planning/vision.md and ask the user directly:
+
+> "Looking at your vision, do you already know what the first feature or system
+> is? Or do you need help figuring out what to build?"
+
+**Signs the full workflow is NOT needed:**
+- The vision names a specific system type (e.g., "a GTD system," "a CI/CD pipeline")
+- The user can articulate what to build without hesitation
+- The "opportunities" are all aspects of one coherent system, not independent problems
+- The domain has well-established prior art (GTD, CRM, etc.) and the user knows it
+
+**Signs the full workflow IS needed:**
+- The vision describes outcomes but not what product achieves them
+- The user has multiple competing ideas and needs to choose
+- The opportunity space is genuinely ambiguous
+- There's no established domain to draw from
+
+**If discovery is not needed:** Skip to Phase 6 (Feature Definition). Write the
+feature entry directly from what the user already knows. The methodology exists
+to generate insight — when insight already exists, the methodology is overhead.
+
+**If discovery is needed:** Proceed to Phase 1.
+
 ### Phase 1: Outcome Definition
 
 **Question:** What user behavior would change if the vision succeeds?
