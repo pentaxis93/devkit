@@ -274,6 +274,7 @@ Before completing epic validation:
 - [ ] Report generated and archived
 - [ ] Any overrides documented with justification
 - [ ] Epic declared complete or follow-up beads filed
+- [ ] Completion callback executed (journey frontmatter status updated)
 
 ---
 

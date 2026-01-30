@@ -1,6 +1,8 @@
 # Features Template
 
 Use this template when creating `planning/features.md`.
+The next pipeline stage is `journey-mapping`, which maps user journeys
+for each feature discovered here.
 
 The file contains a header with vision reference, followed by one
 feature entry per feature discovered. Features are added iteratively
@@ -10,6 +12,7 @@ during the feature-discovery dialogue.
 ---
 status: draft
 vision: planning/vision.md
+downstream: journey-mapping
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 ---

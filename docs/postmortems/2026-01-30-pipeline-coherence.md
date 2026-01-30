@@ -81,10 +81,44 @@ but were never imported. No broken-link audit was performed during import.
    makes this cheaper for incremental changes; the full audit is for
    batch operations.
 
+## Second Audit (same date, after Phase B completion)
+
+After completing Phase B and applying the first audit's fixes, a second
+coherence audit checked the README's pipeline coherence checklist against
+every pipeline skill. Found 8 additional discrepancies:
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| D1 | vision-workshop had no pipeline root declaration | Medium |
+| D2 | vision-workshop quality checklist didn't mention next stage | Medium |
+| D3 | vision-template frontmatter had no `downstream` field | Low |
+| D4 | features-template had no downstream consumer reference | Low |
+| D5 | beads-plan quality checklist didn't mention next stage | Medium |
+| D6 | beads-execute had no Pipeline Position or completion convention reference | Medium |
+| D7 | epic-validation quality checklist didn't mention completion callback | Medium |
+| D8 | README claimed "each skill names its predecessor" — vision-workshop didn't | Low |
+
+**Root cause:** Same mechanism as first audit. The README coherence
+checklist existed but was never executed as a validation gate on the
+Phase B work. Skills that received heavy rewrites (beads-plan,
+journey-mapping) were coherent; lighter-touch skills had gaps.
+
+**Fixes applied:**
+- Added Pipeline Position section to vision-workshop and beads-execute
+- Added next-stage mentions to quality checklists in vision-workshop,
+  beads-plan, and epic-validation
+- Added `downstream` frontmatter field to all 3 pipeline templates
+- Updated README claim to note vision-workshop as pipeline root
+- Made coherence checklist imperative: "Run this checklist after every
+  pipeline skill edit"
+
+**Lesson:** Checklists must be executed, not merely documented. Changed
+the checklist header from passive to imperative.
+
 ## Accepted Residual
 
 - journey-mapping at 557 lines — the Epic Definition phase is core
   methodology and cannot be extracted without fragmenting the skill's
   coherence. Accepted as over target.
-- beads-plan at 904 lines — already extracted 3 reference sections;
+- beads-plan at 905 lines — already extracted 3 reference sections;
   remaining content is core methodology. Accepted as over target.

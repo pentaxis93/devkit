@@ -31,6 +31,14 @@ If you finish early, summarize what was accomplished and what remains. The human
 
 ---
 
+## Pipeline Position
+
+This skill is stage 5 of the pipeline. It receives a bead DAG from
+`beads-plan` and executes beads through claim/work/close cycles. When
+all beads in an epic close (100%), invoke `epic-validation` for the
+completion gate. Epic-validation handles the journey frontmatter status
+update (see its Completion Callback section).
+
 ## Prerequisites
 
 - `bd` CLI installed and initialized in the project

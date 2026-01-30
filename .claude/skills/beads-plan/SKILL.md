@@ -342,6 +342,7 @@ Every bead should have implicit or explicit in-scope/out-of-scope. If scope is a
 - [ ] Concrete references (file paths, line numbers, pattern examples)
 - [ ] Bounded scope (in-scope and out-of-scope explicit if ambiguous)
 - [ ] Observable success (verification steps are concrete)
+- [ ] Bead DAG ready for beads-execute (at least one bead has no blockers)
 
 ### INVEST at Bead Granularity
 

@@ -7,6 +7,7 @@ to derive features from the vision's success criteria.
 ```markdown
 ---
 status: draft
+downstream: feature-discovery
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 ---

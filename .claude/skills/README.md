@@ -57,13 +57,15 @@ and maintain them:
 Each planning-layer stage (vision, features, journeys) produces a
 markdown artifact with a defined template (see `references/` in each
 skill's directory). Each artifact's frontmatter references its upstream
-source, and each skill names its predecessor and successor. The journey
-file's Epics section serves as the handoff contract between the planning
-and execution layers.
+source and names its downstream consumer. Each skill names its
+predecessor and successor (vision-workshop is the pipeline root). The
+journey file's Epics section serves as the handoff contract between the
+planning and execution layers.
 
 ### Pipeline coherence checklist
 
-When adding or editing a pipeline skill, verify:
+**Run this checklist after every pipeline skill edit.** When adding or
+editing a pipeline skill, verify:
 
 - [ ] Skill names its upstream skill by name (or "pipeline root")
 - [ ] Skill names its downstream skill by name

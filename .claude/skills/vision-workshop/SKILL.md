@@ -334,6 +334,7 @@ Before completing, verify:
 - [ ] Biggest risk/assumption identified for validation
 - [ ] planning/vision.md updated with all content
 - [ ] No [REPLACE] placeholders remaining
+- [ ] Vision ready for feature-discovery (success criteria are specific enough to derive features)
 
 ---
 
@@ -435,11 +436,16 @@ Agent: That's a solid validation plan. Your vision is ready for feature discover
 - **Outputs:** planning/vision.md with STATUS: draft
 - **Next Steps:** Validate biggest assumption; use feature-discovery skill to derive features from vision
 
+## Pipeline Position
+
+This skill is the **pipeline root** — the first stage. It has no upstream
+predecessor. Its output (`planning/vision.md`) feeds `feature-discovery`.
+
 ## Related Skills
 
 | Skill | Relationship |
 |-------|--------------|
-| `feature-discovery` | Consumes `planning/vision.md` to derive features |
+| `feature-discovery` | Downstream: consumes `planning/vision.md` to derive features |
 
 ---
 

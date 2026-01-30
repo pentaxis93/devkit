@@ -10,6 +10,7 @@ beads-plan decomposes into executable tasks.
 ---
 status: draft | scenarios-complete | ready | in-progress | complete
 feature: planning/features.md#[feature-name]
+downstream: beads-plan
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 ---
