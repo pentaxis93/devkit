@@ -435,13 +435,15 @@ Agent: That's a solid validation plan. Your vision is ready for feature discover
 - **Outputs:** planning/vision.md with STATUS: draft
 - **Next Steps:** Validate biggest assumption; use feature-discovery skill to derive features from vision
 
+## Related Skills
+
+| Skill | Relationship |
+|-------|--------------|
+| `feature-discovery` | Consumes `planning/vision.md` to derive features |
+
+---
+
 ## Output Template
 
 For the exact markdown template for `planning/vision.md`, see
 [references/vision-template.md](references/vision-template.md).
-
-## TODO: Pending Adaptations
-
-- [ ] Review whether Lean Inception's Is/Isn't-Does/Doesn't matrix should
-  be added as a scope-bounding artifact in Phase 5 or Phase 7.
-

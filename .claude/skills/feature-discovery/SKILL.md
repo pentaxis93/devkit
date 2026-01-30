@@ -450,14 +450,16 @@ Now let's define the feature. What's in scope?
 - **Outputs:** planning/features.md with feature entries
 - **Next Steps:** Validate riskiest assumptions before heavy investment; use journey-mapping skill for each feature
 
+## Related Skills
+
+| Skill | Relationship |
+|-------|--------------|
+| `vision-workshop` | Produces `planning/vision.md` consumed as input |
+| `journey-mapping` | Maps journeys for each feature discovered here |
+
+---
+
 ## Output Template
 
 For the exact markdown template for `planning/features.md`, see
 [references/features-template.md](references/features-template.md).
-
-## TODO: Pending Adaptations
-
-- [ ] Consider adding GIST ICE scoring (Impact/Confidence/Ease) as an
-  alternative prioritization method in Phase 3 to complement the current
-  impact/evidence matrix.
-

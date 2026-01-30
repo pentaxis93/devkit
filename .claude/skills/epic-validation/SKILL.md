@@ -315,7 +315,25 @@ Report archived: .beads/reports/bd-e12-validation.json
 
 ---
 
-## References
+## Completion Callback
 
-- [skills/validate-pipeline](../skills/validate-pipeline/) - Per-bead validation
-- Update source journey file frontmatter status to `completed` when epic passes validation
+When the epic passes validation, update the source journey file to reflect
+that execution is complete:
+
+1. Read the epic's `source_journey` reference (e.g., `journeys/first-deployment.md#epic-name`)
+2. Open the referenced journey file in `planning/journeys/`
+3. Update the YAML frontmatter `status` field from `in-progress` to `complete`
+4. Commit the journey file update
+
+This keeps planning artifacts in sync with execution state. Journey files
+must be updated or deleted, never left stale.
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|--------------|
+| `validate-pipeline` | Per-bead validation (this skill validates the whole epic) |
+| `coherence-audit` | Invoke when validation reveals systemic discrepancies |
+| `beads-execute` | Executes beads; this skill runs after all beads close |

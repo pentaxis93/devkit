@@ -37,6 +37,7 @@ mapping defines epics, beads-plan decomposes them.
 |-------|-----------------|
 | `validate-pipeline` | Quality gate per bead during execution |
 | `epic-validation` | Quality gate at 100% epic completion |
+| `coherence-audit` | Systematic audit when discrepancies reveal systemic issues |
 | `iterative-planning-context` | Codebase context for beads-plan decomposition |
 
 ### BDD skills (pipeline-adjacent)
@@ -53,11 +54,25 @@ and maintain them:
 
 ### Pipeline status
 
-Each pipeline stage produces a markdown artifact with a defined template
-(see `references/` in each skill's directory). The handoff between
-stages is explicit: each artifact references its upstream source, and
-the journey file's Epics section serves as the contract between the
-planning and execution layers.
+Each planning-layer stage (vision, features, journeys) produces a
+markdown artifact with a defined template (see `references/` in each
+skill's directory). Each artifact's frontmatter references its upstream
+source, and each skill names its predecessor and successor. The journey
+file's Epics section serves as the handoff contract between the planning
+and execution layers.
+
+### Pipeline coherence checklist
+
+When adding or editing a pipeline skill, verify:
+
+- [ ] Skill names its upstream skill by name (or "pipeline root")
+- [ ] Skill names its downstream skill by name
+- [ ] Skill has a Related Skills table with at least predecessor and successor
+- [ ] Output template (if any) references its upstream artifact in frontmatter
+- [ ] Output template (if any) names its downstream consumer
+- [ ] Quality checklist mentions the next pipeline stage
+- [ ] All cross-references to other files resolve (no broken links)
+- [ ] README skill tables are updated
 
 ## Skills
 
@@ -77,6 +92,7 @@ planning and execution layers.
 |-------|-------------|
 | `validate-pipeline` | Quality gate per bead (tests, lint, format) |
 | `epic-validation` | Epic-level quality gate at 100% completion |
+| `coherence-audit` | Systematic audit when discrepancies reveal systemic issues |
 | `iterative-planning-context` | Codebase context snapshots for planning |
 
 ### BDD

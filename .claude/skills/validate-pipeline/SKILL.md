@@ -266,8 +266,9 @@ LOOP:
 
 ---
 
-## References
+## Related Skills
 
-- [docs/validation-interface.md](../docs/validation-interface.md) - Validation step interface spec
-- [commands/beads-loop.md](../commands/beads-loop.md) - Step 5 VERIFY COMPLETION
-- bd-e12.2 - Design validation step interface (completed)
+| Skill | Relationship |
+|-------|--------------|
+| `beads-execute` | Invokes this skill at step 5 (VERIFY COMPLETION) before closing a bead |
+| `epic-validation` | Runs after all beads close; this skill validates individual beads |

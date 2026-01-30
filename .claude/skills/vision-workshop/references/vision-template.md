@@ -1,6 +1,8 @@
 # Vision Template
 
 Use this template when creating `planning/vision.md`.
+The next pipeline stage is `feature-discovery`, which reads this file
+to derive features from the vision's success criteria.
 
 ```markdown
 ---

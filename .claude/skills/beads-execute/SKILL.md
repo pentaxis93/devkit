@@ -585,6 +585,16 @@ bd epic status <epic-id>
 
 ---
 
+## Related Skills
+
+| Skill | Relationship |
+|-------|--------------|
+| `beads-plan` | Creates the bead DAG that this skill executes |
+| `validate-pipeline` | Quality gate invoked before closing each bead |
+| `epic-validation` | Quality gate at 100% epic completion |
+
+---
+
 ## Project Documentation Protocol
 
 For the full documentation protocol (when to document, standards, templates, inline code documentation guidelines), see [references/documentation-protocol.md](references/documentation-protocol.md).

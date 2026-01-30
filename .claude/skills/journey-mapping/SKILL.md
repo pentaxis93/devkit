@@ -89,7 +89,7 @@ Map the walking skeleton before adding depth.
 
 **Question:** Which feature's journey are we mapping? What is the end-to-end goal?
 
-Select a feature from planning/features.md. The journey should represent a complete user goal.
+Select a feature from planning/features.md (produced by feature-discovery). The journey should represent a complete user goal.
 
 **Good journey scope:**
 - "New user completes first successful deployment"
@@ -529,12 +529,22 @@ Your journey is ready. Saving to planning/journeys/first-deployment.md.
 
 ---
 
+## Related Skills
+
+| Skill | Relationship |
+|-------|--------------|
+| `feature-discovery` | Produces `planning/features.md` consumed as input |
+| `beads-plan` | Decomposes the epics defined in this skill's output |
+| `bdd-scenario-design` | Implements the Gherkin scenarios produced here |
+
+---
+
 ## Metadata
 
 - **Domain:** requirements
 - **Energy:** medium-high
 - **Time Estimate:** 45-90 minutes per journey
-- **Prerequisites:** Feature exists in planning/features.md; planning/journeys/ directory exists
+- **Prerequisites:** Completed feature-discovery (feature exists in planning/features.md); planning/journeys/ directory exists
 - **Outputs:** planning/journeys/<slug>.md with Gherkin scenarios
 - **Next Steps:** Use beads-plan skill to decompose epics into executable bead DAGs
 
