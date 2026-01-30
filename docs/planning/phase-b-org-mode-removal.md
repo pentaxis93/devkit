@@ -98,59 +98,6 @@ Target: ~900 lines (still over 500 — may need further extraction).
 
 - Attribution line (449): same as feature-discovery
 
-## Pipeline Handoff Analysis (Research Complete)
-
-### What each stage currently produces
-
-**feature-discovery → `planning/features.md`**
-Each feature entry contains: job story (When/I want/So I can), evidence,
-measurable success criteria, in-scope/out-of-scope, assumptions with
-tests. Leaves a `Journeys:` field empty for journey-mapping to populate.
-Template not yet formally defined (has TODO).
-
-**journey-mapping → `planning/journeys/<slug>.md`**
-YAML frontmatter (status, feature ref, dates). Content: persona + goal,
-3-6 phases of user mental model, touchpoints per phase (user action +
-system response), pain points and opportunities, Gherkin scenarios
-(Feature/Scenario/Given-When-Then), walking skeleton identification.
-Template not yet formally defined (has TODO).
-
-**Crucially:** journey-mapping's TODO section (line 469) describes a
-planned but unimplemented **Epics section** — each journey maps to one
-or more coarse epics with title, description, walking skeleton, and
-Gherkin-derived acceptance criteria. This is the missing bridge.
-
-**beads-plan ← expects "project specifications"**
-Phase 1 (Understanding) is generic: scope, success criteria, constraints,
-risks, stakeholders, 3-7 major components. No reference to journey files
-or any upstream pipeline stage.
-
-### What the org-mode glue layer was doing
-
-In beadsmith, three skills bridged journey-mapping to beads-plan:
-
-```
-journey-mapping → journeys/<slug>.md
-                       │
-                 journey-to-tasks (INVEST validation, Definition of Ready)
-                       │
-                 org-mode tasks (canonical state store)
-                       │
-                 spawn-to-beads (bd create epic with source_org_id)
-                       │
-                 beads-plan (decomposes epic into bead DAG)
-                       │
-                 beads-harness (executes beads)
-                       │
-                 complete-to-org (updates org task to DONE)
-```
-
-The org-mode layer provided:
-1. **Traceability**: `source_org_id` in beads ↔ `DELEGATED_TO` in org
-2. **State management**: org tasks tracked TODO → WAITING → DONE
-3. **Readiness gating**: journey-to-tasks applied INVEST before spawn
-4. **Completion callbacks**: complete-to-org closed the loop
-
 ### Target state: direct connection (no org layer)
 
 ```
