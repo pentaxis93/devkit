@@ -60,8 +60,8 @@ planning and agent-autonomous execution.
 ### Supporting and adjacent skills
 
 In addition to the 5 core pipeline skills:
-- `validate-pipeline`, `epic-validation`, `iterative-planning-context`
-  (pipeline supporting)
+- `validate-pipeline`, `epic-validation`, `coherence-audit`,
+  `iterative-planning-context` (pipeline supporting)
 - 4 BDD skills (pipeline-adjacent — journey-mapping produces Gherkin
   scenarios that these skills implement)
 - `writing-clearly-and-concisely` (cross-cutting prose quality)
