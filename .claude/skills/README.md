@@ -66,8 +66,9 @@ planning and execution layers.
 
 ### Pipeline coherence checklist
 
-**Run this checklist after every pipeline skill edit.** When adding or
-editing a pipeline skill, verify:
+**Run this checklist after every pipeline skill edit.** Applies to ALL
+pipeline skills (core, supporting, and BDD). When adding or editing a
+pipeline skill, verify:
 
 - [ ] Skill names its upstream skill by name (or "pipeline root")
 - [ ] Skill names its downstream skill by name

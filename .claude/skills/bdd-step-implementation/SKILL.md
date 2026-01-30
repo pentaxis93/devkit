@@ -9,10 +9,6 @@ description: >-
 
 # BDD Step Implementation Skill
 
-> Version: 1.0.0
-> Compiler: skill-compiler/1.0.0
-> Last Updated: 2026-01-25
-
 Write rstest-bdd step definitions and wire to fixtures.
 
 ## When to Activate

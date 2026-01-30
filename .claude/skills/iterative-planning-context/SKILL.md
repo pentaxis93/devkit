@@ -11,10 +11,6 @@ description: >-
 
 # Iterative Planning Context Skill
 
-> Version: 1.0.0
-> Compiler: skill-compiler/1.0.0
-> Last Updated: 2026-01-25
-
 Acquire codebase context for planning iterative changes to existing codebases. Produces a Planning Context Snapshot that enables effective decomposition and integration planning.
 
 ## When to Activate
@@ -458,16 +454,16 @@ crates/mytool/src/
     └── init.rs     # Pattern to follow
 
 skills/
-├── codebase-exploration/  # Related! Produces understanding
+├── vision-workshop/       # Pipeline skill example
 ├── beads-plan/            # Decomposition skill
 
 Adding New Code:
 | Type | Location | Pattern |
 | Command | commands/<name>.rs | init.rs |
-| Skill | skills/<name>/ | codebase-exploration/ |
+| Skill | skills/<name>/ | vision-workshop/ |
 
 # Phase 3: Pattern Extraction (15 min)
-Sampled: main.rs, skills.rs, init.rs, codebase-exploration/SKILL.md
+Sampled: main.rs, skills.rs, init.rs, vision-workshop/SKILL.md
 Naming: kebab-case dirs, snake_case modules, PascalCase types
 Errors: anyhow::Result with .context()
 Tests: #[cfg(test)] modules, tempfile for fs tests
@@ -499,14 +495,4 @@ Context Snapshot: docs/planning/context-mytool.md
 
 | Skill | Relationship |
 |-------|--------------|
-| `codebase-exploration` | General exploration methodology; this skill adds planning-specific focus |
 | `beads-plan` | Consumes Planning Context Snapshot for decomposition |
-
----
-
-## References
-
-- `docs/planning/codebase-context-spec.md` - What context is needed and why
-- `docs/planning/context-acquisition-protocol.md` - Detailed protocol this skill implements
-- `docs/planning/context-representation-template.md` - Output format specification
-- `codebase-exploration` skill - General exploration methodology

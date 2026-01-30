@@ -147,6 +147,50 @@ that the pipeline is now coherent: every stage's output matches the
 next stage's input, every artifact references its predecessor, and
 the full chain from vision to validated epic is unbroken.
 
+## Fourth Audit (after decision-audit and fixture-validate import)
+
+Expanded scope to all 11 pipeline skills (core + supporting). Ran 88
+checks (8 per skill) plus 10 handoff contracts and new-import
+verification.
+
+**Result: 78 PASS, 4 DISCREPANCY, 6 N/A. All 10 handoff contracts PASS.**
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| D1 | validate-pipeline quality checklist missing next-stage mention | Low |
+| D2 | decision-audit quality checklist missing downstream mention | Low |
+| D3 | fixture-validate quality checklist missing next-stage mention | Low |
+| D4 | iterative-planning-context has 4 broken cross-references | Medium |
+
+**Additional finding:** 7 skills had vestigial `skill-compiler/1.0.0`
+banners from beadsmith's build system. Not functional but claims a
+tool that doesn't exist in this project.
+
+**Root causes:**
+1. D1-D3: Prior audits only checked core pipeline skills for checklist
+   item 6 (quality checklist mentions next stage). Supporting skills
+   were out of scope. The README says "pipeline skill" without
+   distinguishing core vs supporting.
+2. D4: Phase B used grep for org-mode removal (presence check), not
+   link validation (existence check). Broken links to non-imported
+   beadsmith docs were inherited undetected.
+3. Banners: Phase A added frontmatter but didn't remove old version/
+   compiler banners.
+
+**Fixes applied:**
+- Added next-stage mentions to quality checklists in validate-pipeline,
+  decision-audit, and fixture-validate
+- Removed broken references from iterative-planning-context (1 skill
+  ref to non-imported `codebase-exploration`, 3 doc refs to non-imported
+  beadsmith docs)
+- Removed skill-compiler banners from all 7 skills
+- Updated README coherence checklist to explicitly state scope: "Applies
+  to ALL pipeline skills (core, supporting, and BDD)"
+
+**Lesson:** Audit scope must match checklist scope. When the checklist
+says "pipeline skill," it means every skill in the pipeline tables —
+not just the 5 core stages.
+
 ## Accepted Residual
 
 - journey-mapping at 557 lines — the Epic Definition phase is core

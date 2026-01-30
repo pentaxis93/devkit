@@ -236,7 +236,8 @@ Before completing fixture validation:
 - [ ] Hardcoded data patterns checked
 - [ ] Structured JSON report generated
 - [ ] Exit code reflects overall status
-- [ ] Any overrides documented in bead notes using decision-audit format
+- [ ] Any overrides documented in bead notes using `decision-audit` format
+- [ ] If passed: bead proceeds to closure in `validate-pipeline`
 
 ---
 

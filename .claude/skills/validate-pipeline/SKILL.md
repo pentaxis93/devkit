@@ -9,10 +9,6 @@ description: >-
 
 # Validate Pipeline Skill
 
-> Version: 1.0.0
-> Compiler: skill-compiler/1.0.0
-> Last Updated: 2026-01-25
-
 Orchestrate validation steps before closing a bead, aggregating results and enforcing gates.
 
 ## When to Activate
@@ -202,6 +198,7 @@ Before completing validation:
 - [ ] Warnings logged for visibility
 - [ ] Structured report generated
 - [ ] Bead notes updated with any overrides
+- [ ] If all gates pass: bead ready for `bd close` (proceed in beads-execute)
 
 ---
 

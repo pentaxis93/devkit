@@ -221,6 +221,7 @@ Before completing decision recording:
 - [ ] Tracking reference included for deferrals
 - [ ] Decision recorded in bead notes or close reason
 - [ ] Format uses DECISION prefix
+- [ ] Accumulated decisions will be reviewed by `epic-validation` at epic completion
 
 ---
 

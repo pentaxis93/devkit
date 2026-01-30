@@ -9,10 +9,6 @@ description: >-
 
 # Epic Validation Skill
 
-> Version: 1.0.0
-> Compiler: skill-compiler/1.0.0
-> Last Updated: 2026-01-25
-
 Validate epic quality after 100% bead completion before declaring truly complete.
 
 ## When to Activate

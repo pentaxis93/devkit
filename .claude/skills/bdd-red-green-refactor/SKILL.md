@@ -9,10 +9,6 @@ description: >-
 
 # BDD Red-Green-Refactor Skill
 
-> Version: 1.0.0
-> Compiler: skill-compiler/1.0.0
-> Last Updated: 2026-01-25
-
 Execute the TDD inner loop with tight red-green-refactor cycles.
 
 ## When to Activate

@@ -9,10 +9,6 @@ description: >-
 
 # BDD Scenario Design Skill
 
-> Version: 1.0.0
-> Compiler: skill-compiler/1.0.0
-> Last Updated: 2026-01-25
-
 Transform bead acceptance criteria into well-formed Gherkin scenarios.
 
 ## When to Activate

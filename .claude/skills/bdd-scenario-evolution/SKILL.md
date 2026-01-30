@@ -9,10 +9,6 @@ description: >-
 
 # BDD Scenario Evolution Skill
 
-> Version: 1.0.0
-> Compiler: skill-compiler/1.0.0
-> Last Updated: 2026-01-25
-
 Maintain scenarios and fixtures as code evolves.
 
 ## When to Activate
