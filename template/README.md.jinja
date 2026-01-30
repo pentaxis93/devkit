@@ -1,0 +1,50 @@
+# {{ project_name }}
+
+{{ project_description }}
+
+## Development Environment
+
+This project uses a structured planning-to-execution pipeline powered by AI agent skills. The `.claude/skills/` directory contains 23 reusable agent skills covering:
+
+- **Planning layer**: Vision workshop, feature discovery, journey mapping
+- **Execution layer**: Beads planning and execution with BDD workflows
+- **Supporting tools**: Quality gates, coherence audits, commit discipline
+
+## Getting Started
+
+### Planning
+
+The planning pipeline produces markdown artifacts in `planning/`:
+
+1. **Vision** (`planning/vision.md`) - Product vision using Product Vision Board methodology
+2. **Features** (`planning/features.md`) - Feature discovery with Opportunity Solution Trees
+3. **Journeys** (`planning/journeys/*.md`) - User journeys with Gherkin scenarios and epic definitions
+
+Start with `/vision-workshop` to create your first planning artifact.
+
+### Execution
+
+The execution layer uses beads (task management) to decompose and execute epics:
+
+```bash
+# Initialize beads in your project
+bd init
+
+# Plan an epic from a journey file
+# (use /beads-plan skill in your agent)
+
+# Execute beads
+# (use /beads-execute skill in your agent)
+```
+
+### Documentation
+
+Architecture decisions live in `docs/decisions/` using the MADR format. Start new decisions with sequential numbering (0001, 0002, etc.).
+
+## Skills Reference
+
+See `.claude/skills/README.md` for the full catalog of available agent skills and their usage.
+
+## License
+
+[Choose your license]
