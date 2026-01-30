@@ -1,0 +1,32 @@
+---
+# Copier template configuration for sendhelp project template
+# https://copier.readthedocs.io/
+
+_min_copier_version: "9.0.0"
+
+# All project files are in template/ subdirectory
+_subdirectory: template
+
+# Files to skip if they already exist (preserve user customizations on update)
+_skip_if_exists:
+  - ".gitignore"
+  - "docs/decisions/*"
+  - "planning/*"
+
+# Template questions
+project_name:
+  type: str
+  help: Project name (human-readable, e.g., "Send Help")
+  placeholder: "My Project"
+
+project_slug:
+  type: str
+  help: Repository/directory name (lowercase-hyphenated)
+  default: "{{ project_name | lower | replace(' ', '-') | replace('_', '-') }}"
+  placeholder: "my-project"
+
+project_description:
+  type: str
+  help: Short one-line description of the project
+  default: "AI-powered productivity application"
+  placeholder: "A tool that helps users..."
