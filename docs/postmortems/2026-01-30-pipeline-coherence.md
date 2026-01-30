@@ -115,6 +115,38 @@ journey-mapping) were coherent; lighter-touch skills had gaps.
 **Lesson:** Checklists must be executed, not merely documented. Changed
 the checklist header from passive to imperative.
 
+## Third Audit (same date, after coherence-audit skill import)
+
+After importing the `coherence-audit` skill and completing Phase B,
+a third audit ran the full README pipeline coherence checklist (48
+checks across Matrices A-D) against all 8 pipeline skills.
+
+**Result: 47 PASS, 1 DISCREPANCY.**
+
+| ID | Description | Severity |
+|----|-------------|----------|
+| D1 | beads-execute had no Quality Checklist section | Low |
+
+All handoff contracts (Matrix B: 6/6), traceability chain (Matrix C:
+4/4), and completion callback (Matrix D: 3/3) verified correct.
+
+**Root cause:** Same as prior audits — the README coherence checklist
+existed but wasn't executed after Phase B edits. beads-execute was the
+only pipeline skill without a Quality Checklist section. The
+information existed in its Pipeline Position section (line 38: "invoke
+epic-validation for the completion gate") but not in a formal checklist
+as the README pattern requires.
+
+**Fix:** Added Quality Checklist section to beads-execute with 7 items
+including "When epic reaches 100%: invoke epic-validation."
+
+**Process assessment:** No new process fix needed. The existing
+checklist caught this. The pattern from audits 1 and 2 — "checklists
+must be executed, not just documented" — held. This audit validates
+that the pipeline is now coherent: every stage's output matches the
+next stage's input, every artifact references its predecessor, and
+the full chain from vision to validated epic is unbroken.
+
 ## Accepted Residual
 
 - journey-mapping at 557 lines — the Epic Definition phase is core

@@ -310,6 +310,18 @@ If you need to work on something blocked:
 
 ---
 
+## Quality Checklist
+
+- [ ] Bead claimed before work started (`bd update <id> --claim`)
+- [ ] Acceptance criteria verified before closing
+- [ ] Discovered work filed as new beads with dependencies
+- [ ] Bead closed with summary (`bd close <id> -r "reason"`)
+- [ ] Changes committed and pushed
+- [ ] `bd sync` run after closing
+- [ ] When epic reaches 100%: invoke `epic-validation` for completion gate
+
+---
+
 ## Session End Protocol
 
 When the user invokes `/beads-land`, follow the landing protocol:
